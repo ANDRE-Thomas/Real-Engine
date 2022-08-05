@@ -19,6 +19,18 @@
     <Filter Include="Source Files\Display">
       <UniqueIdentifier>{059a6248-5583-475e-aa3a-f8b0a9e82b8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Rendering">
+      <UniqueIdentifier>{feb39137-0a31-4d5e-b93d-a70013a0236f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering">
+      <UniqueIdentifier>{6a73bc5b-0d62-4a1d-bb73-341a62a8343f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{781ab969-7e49-4b31-a9a8-b1b2f098ca64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{644a4aaf-9798-431b-9c33-7cd1cadf08f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Real Engine.cpp">
@@ -33,6 +45,12 @@
     <ClCompile Include="src\Display\Window.cpp">
       <Filter>Source Files\Display</Filter>
     </ClCompile>
+    <ClCompile Include="src\Rendering\Camera.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\Transform.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\Program.h">
@@ -46,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="includes\Display\WindowOptions.h">
       <Filter>Header Files\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Rendering\Camera.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Components\Transform.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

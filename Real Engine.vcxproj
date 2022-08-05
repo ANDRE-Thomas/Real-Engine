@@ -19,16 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Display\Window.cpp" />
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Real Engine.cpp" />
+    <ClCompile Include="src\Rendering\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\Components\Transform.h" />
     <ClInclude Include="includes\Display\Window.h" />
     <ClInclude Include="includes\Display\WindowOptions.h" />
     <ClInclude Include="includes\Log.h" />
     <ClInclude Include="includes\Program.h" />
+    <ClInclude Include="includes\Rendering\Camera.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
