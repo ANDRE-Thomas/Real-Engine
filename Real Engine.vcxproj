@@ -118,21 +118,22 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)external\GLEW\lib\Release\x64;$(ProjectDir)external\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)external\ASSIMP\lib\$(Configuration)\;$(ProjectDir)external\GLEW\lib\Release\x64;$(ProjectDir)external\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(ProjectDir)external\GLFW\lib-vc2022\*.dll" "$(OutDir)"
-xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\$(Platform)\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)external\ASSIMP\bin\$(Configuration)\*.dll" "$(OutDir)"
 xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -144,7 +145,7 @@ xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -152,12 +153,13 @@ xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)external\GLEW\lib\Release\x64;$(ProjectDir)external\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;assimp-vc143-mtd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)external\ASSIMP\lib\$(Configuration)\;$(ProjectDir)external\GLEW\lib\Release\x64;$(ProjectDir)external\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(ProjectDir)external\GLFW\lib-vc2022\*.dll" "$(OutDir)"
-xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\$(Platform)\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)external\ASSIMP\bin\$(Configuration)\*.dll" "$(OutDir)"
 xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -167,21 +169,22 @@ xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)external\GLEW\lib\Release\x64;$(ProjectDir)external\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)external\ASSIMP\lib\$(Configuration)\;$(ProjectDir)external\GLEW\lib\Release\x64;$(ProjectDir)external\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(ProjectDir)external\GLFW\lib-vc2022\*.dll" "$(OutDir)"
-xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\$(Platform)\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)external\ASSIMP\bin\$(Configuration)\*.dll" "$(OutDir)"
 xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -193,7 +196,7 @@ xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -201,12 +204,13 @@ xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)external\GLEW\lib\Release\x64;$(ProjectDir)external\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;assimp-vc143-mt.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)external\ASSIMP\lib\$(Configuration)\;$(ProjectDir)external\GLEW\lib\Release\x64;$(ProjectDir)external\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(ProjectDir)external\GLFW\lib-vc2022\*.dll" "$(OutDir)"
-xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\$(Platform)\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)external\ASSIMP\bin\$(Configuration)\*.dll" "$(OutDir)"
 xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

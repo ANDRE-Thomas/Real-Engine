@@ -1,0 +1,14 @@
+# CMake generation dependency list for this directory.
+C:/Users/thoma/Downloads/assimp-5.2.4/CMakeFiles/CheckTypeSize/OFF64_T.c
+C:/Users/thoma/Downloads/assimp-5.2.4/contrib/zlib/CMakeLists.txt
+C:/Users/thoma/Downloads/assimp-5.2.4/contrib/zlib/zconf.h.cmakein
+C:/Users/thoma/Downloads/assimp-5.2.4/contrib/zlib/zlib.pc.cmakein
+E:/Development/ThirdParty/CMake/share/cmake-3.23/Modules/CheckCSourceCompiles.cmake
+E:/Development/ThirdParty/CMake/share/cmake-3.23/Modules/CheckFunctionExists.c
+E:/Development/ThirdParty/CMake/share/cmake-3.23/Modules/CheckFunctionExists.cmake
+E:/Development/ThirdParty/CMake/share/cmake-3.23/Modules/CheckIncludeFile.c.in
+E:/Development/ThirdParty/CMake/share/cmake-3.23/Modules/CheckIncludeFile.cmake
+E:/Development/ThirdParty/CMake/share/cmake-3.23/Modules/CheckIncludeFileCXX.cmake
+E:/Development/ThirdParty/CMake/share/cmake-3.23/Modules/CheckTypeSize.c.in
+E:/Development/ThirdParty/CMake/share/cmake-3.23/Modules/CheckTypeSize.cmake
+E:/Development/ThirdParty/CMake/share/cmake-3.23/Modules/Internal/CheckSourceCompiles.cmake

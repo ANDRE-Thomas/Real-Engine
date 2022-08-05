@@ -1,6 +1,7 @@
 #include "Program.h"
 #include "Log.h"
 #include "Display/Window.h"
+
 #include <glm/gtx/string_cast.hpp>
 
 Program* program;

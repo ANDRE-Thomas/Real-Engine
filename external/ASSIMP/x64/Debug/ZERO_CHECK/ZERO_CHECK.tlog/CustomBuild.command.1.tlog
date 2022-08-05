@@ -1,0 +1,10 @@
+^C:\USERS\THOMA\DOWNLOADS\ASSIMP-5.2.4\CMAKEFILES\943179662734A6E3CA70FA35AB6FDA25\GENERATE.STAMP.RULE
+setlocal
+E:\Development\ThirdParty\CMake\bin\cmake.exe -SC:/Users/thoma/Downloads/assimp-5.2.4 -BC:/Users/thoma/Downloads/assimp-5.2.4 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/thoma/Downloads/assimp-5.2.4/Assimp.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
