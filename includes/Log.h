@@ -4,13 +4,18 @@
 #include <iostream>
 #include <windows.h>
 
-static class Log
+class Log
 {
 public:
 	static void Message(std::string message);
+	static void Message(char* message);
+
 	static void Warning(std::string message);
+	static void Warning(char* message);
+
 	static void Error(std::string message);
+	static void Error(char* message);
 
 private:
-	static bool GetCurrentColor(float& returnValue);
+	static bool GetCurrentColor(WORD& returnValue);
 };

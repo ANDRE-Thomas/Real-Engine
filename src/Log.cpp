@@ -1,8 +1,16 @@
 #include "Log.h"
 
+void Log::Message(char* message)
+{
+	if (message == nullptr)
+		return;
+
+	Log::Message(std::string(message));
+}
+
 void Log::Message(std::string message)
 {
-	float previousColor = 15;
+	WORD previousColor = 15;
 	GetCurrentColor(previousColor);
 
 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -13,9 +21,17 @@ void Log::Message(std::string message)
 	SetConsoleTextAttribute(console, previousColor);
 }
 
+void Log::Warning(char* message)
+{
+	if (message == nullptr)
+		return;
+
+	Log::Warning(std::string(message));
+}
+
 void Log::Warning(std::string message)
 {
-	float previousColor = 15;
+	WORD previousColor = 15;
 	GetCurrentColor(previousColor);
 
 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -26,9 +42,17 @@ void Log::Warning(std::string message)
 	SetConsoleTextAttribute(console, previousColor);
 }
 
+void Log::Error(char* message)
+{
+	if (message == nullptr)
+		return;
+
+	Log::Error(std::string(message));
+}
+
 void Log::Error(std::string message)
 {
-	float previousColor = 15;
+	WORD previousColor = 15;
 	GetCurrentColor(previousColor);
 
 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -39,7 +63,7 @@ void Log::Error(std::string message)
 	SetConsoleTextAttribute(console, previousColor);
 }
 
-bool Log::GetCurrentColor(float& returnValue)
+bool Log::GetCurrentColor(WORD& returnValue)
 {
 	CONSOLE_SCREEN_BUFFER_INFO info;
 	if (!GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info))
