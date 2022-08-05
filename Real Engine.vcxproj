@@ -19,20 +19,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Component.cpp" />
+    <ClCompile Include="src\Components\Renderer.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Display\Window.cpp" />
     <ClCompile Include="src\Log.cpp" />
+    <ClCompile Include="src\Objects\Camera.cpp" />
+    <ClCompile Include="src\Objects\GameObject.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Real Engine.cpp" />
-    <ClCompile Include="src\Rendering\Camera.cpp" />
+    <ClCompile Include="src\Rendering\Material.cpp" />
+    <ClCompile Include="src\Rendering\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\Components\Component.h" />
+    <ClInclude Include="includes\Components\Renderer.h" />
     <ClInclude Include="includes\Components\Transform.h" />
     <ClInclude Include="includes\Display\Window.h" />
     <ClInclude Include="includes\Display\WindowOptions.h" />
     <ClInclude Include="includes\Log.h" />
+    <ClInclude Include="includes\Objects\Camera.h" />
+    <ClInclude Include="includes\Objects\GameObject.h" />
     <ClInclude Include="includes\Program.h" />
-    <ClInclude Include="includes\Rendering\Camera.h" />
+    <ClInclude Include="includes\Rendering\Material.h" />
+    <ClInclude Include="includes\Rendering\Mesh.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -122,7 +132,8 @@
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(ProjectDir)external\GLFW\lib-vc2022\*.dll" "$(OutDir)"
-xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"</Command>
+xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -146,7 +157,8 @@ xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"</Com
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(ProjectDir)external\GLFW\lib-vc2022\*.dll" "$(OutDir)"
-xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"</Command>
+xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -169,7 +181,8 @@ xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"</Com
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(ProjectDir)external\GLFW\lib-vc2022\*.dll" "$(OutDir)"
-xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"</Command>
+xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -193,10 +206,16 @@ xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"</Com
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(ProjectDir)external\GLFW\lib-vc2022\*.dll" "$(OutDir)"
-xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"</Command>
+xcopy /y /d  "$(ProjectDir)external\GLEW\bin\Release\x64\*.dll" "$(OutDir)"
+xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <Content Include="res\**">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

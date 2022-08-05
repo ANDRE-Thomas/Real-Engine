@@ -1,16 +1,24 @@
 #include "Components/Transform.h"
 
-Transform::Transform() {}
+Transform::Transform()
+{
+	this->position = vec3(0);
+	this->rotation = quat();
+	this->scale = vec3(1);
+}
 
 Transform::Transform(vec3 position)
 {
 	this->position = position;
+	this->rotation = quat();
+	this->scale = vec3(1);
 }
 
 Transform::Transform(vec3 position, quat rotation)
 {
 	this->position = position;
 	this->rotation = rotation;
+	this->scale = vec3(1);
 }
 
 Transform::Transform(vec3 position, quat rotation, vec3 scale)
@@ -94,7 +102,7 @@ void Transform::Rotate(quat rotation)
 
 void Transform::RotateAxis(vec3 axis, float angle)
 {
-	SetRotation(quat_cast(rotate(mat4_cast(GetRotation()), angle, axis)));
+	this->rotation = quat_cast(rotate(mat4_cast(GetRotation()), radians(angle), axis));
 }
 
 mat4 Transform::GetMatrix4x4()

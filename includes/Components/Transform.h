@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Components/Component.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -7,7 +9,7 @@ using namespace glm;
 
 #include <cmath>
 
-class Transform
+class Transform : public Component
 {
 public:
 	Transform();
@@ -32,7 +34,7 @@ public:
 	mat4 GetMatrix4x4();
 
 private:
-	vec3 position = vec3();
-	quat rotation = quat();
-	vec3 scale = vec3(1);
+	vec3 position;
+	quat rotation;
+	vec3 scale;
 };
