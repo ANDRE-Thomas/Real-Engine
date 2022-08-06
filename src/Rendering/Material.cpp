@@ -81,6 +81,9 @@ GLuint Material::LoadProgramFromFile(std::string materialID, xxh::hash64_t codeh
 	metaInput.read((char*)&materialCodeHash, sizeof(xxh::hash64_t));
 	metaInput.close();
 
+	Log::Message(std::to_string(codehash));
+	Log::Message(std::to_string(materialCodeHash));
+
 	if (materialCodeHash != codehash)
 	{
 		Log::Warning("Material code was changed since last compilation, recompiling material...");
@@ -126,12 +129,12 @@ bool Material::SaveProgramToFile(GLuint programID, std::string materialID, xxh::
 	std::string shaderDataPath = (std::filesystem::current_path() / shadersArtefactsDirectory).string();
 
 	// Write the binary to a file.
-	std::ofstream outBinary(shaderDataPath + materialID + ".shaderbin", std::ios::binary);
+	std::ofstream outBinary(shaderDataPath + materialID + ".shaderbin", std::ofstream::binary | std::ofstream::trunc);
 	outBinary.write(reinterpret_cast<char*>(buffer.data()), length);
 	outBinary.close();
 
 	// Write the metadata to a file.
-	std::ofstream outMetadata(shaderDataPath + materialID + ".shadermeta", std::ios::app);
+	std::ofstream outMetadata(shaderDataPath + materialID + ".shadermeta", std::ios::trunc);
 	outMetadata.write((char*)&format, sizeof(GLenum));
 	outMetadata.write((char*)&codeHash, sizeof(xxh::hash64_t));
 	outMetadata.close();
