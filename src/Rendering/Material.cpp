@@ -65,7 +65,7 @@ GLuint Material::LoadProgramFromFile(std::string materialID, xxh::hash64_t codeh
 	if (!std::filesystem::is_regular_file(materialDataFilename + ".shaderbin") || !std::filesystem::is_regular_file(materialDataFilename + ".shadermeta"))
 		return NULL;
 
-	GLuint program = glCreateProgram();
+	GLuint programID = glCreateProgram();
 
 	// Load binary from file
 	std::ifstream binaryInput(materialDataFilename + ".shaderbin", std::ios::binary);
@@ -81,9 +81,6 @@ GLuint Material::LoadProgramFromFile(std::string materialID, xxh::hash64_t codeh
 	metaInput.read((char*)&materialCodeHash, sizeof(xxh::hash64_t));
 	metaInput.close();
 
-	Log::Message(std::to_string(codehash));
-	Log::Message(std::to_string(materialCodeHash));
-
 	if (materialCodeHash != codehash)
 	{
 		Log::Warning("Material code was changed since last compilation, recompiling material...");
@@ -91,16 +88,19 @@ GLuint Material::LoadProgramFromFile(std::string materialID, xxh::hash64_t codeh
 	}
 
 	// Install shader binary
-	glProgramBinary(program, format, buffer.data(), buffer.size());
+	glProgramBinary(programID, format, buffer.data(), buffer.size());
 
 	// Check for success/failure
 	GLint status;
-	glGetProgramiv(program, GL_LINK_STATUS, &status);
+	glGetProgramiv(programID, GL_LINK_STATUS, &status);
+
 	if (GL_FALSE == status)
 	{
 		Log::Error("Error while loading material from file");
 		return NULL;
 	}
+
+	return programID;
 }
 
 bool Material::SaveProgramToFile(GLuint programID, std::string materialID, xxh::hash64_t codeHash)
