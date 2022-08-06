@@ -1,9 +1,12 @@
 #pragma once
 
-#include <map>
-#include <string>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+using namespace glm;
+
+#include <map>
+#include <string>
 #include "xxhash.hpp"
 
 class Material
@@ -24,6 +27,11 @@ private:
 
 public:
 	GLint GetProgramID();
+
+	void SetBool(const std::string& name, bool value);
+	void SetInt(const std::string& name, int value);
+	void SetFloat(const std::string& name, float value);
+	void SetMat4x4(const std::string& name, mat4x4 value);
 
 private:
 	GLint programID;

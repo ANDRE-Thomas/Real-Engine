@@ -24,7 +24,7 @@ private:
 	Mesh* mesh;
 	Material* material;
 
-	GLuint vertexbuffer, uvbuffer, normalbuffer, mvpID;
+	GLuint VBO;
 
 	void UpdateBuffers();
 };

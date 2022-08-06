@@ -262,3 +262,23 @@ GLint Material::GetProgramID()
 {
 	return programID;
 }
+
+void Material::SetBool(const std::string& name, bool value)
+{
+	glUniform1i(glGetUniformLocation(programID, name.c_str()), (int)value);
+}
+
+void Material::SetInt(const std::string& name, int value)
+{
+	glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
+}
+
+void Material::SetFloat(const std::string& name, float value)
+{
+	glUniform1f(glGetUniformLocation(programID, name.c_str()), value);
+}
+
+void Material::SetMat4x4(const std::string& name, mat4x4 value)
+{
+	glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, &value[0][0]);
+}
