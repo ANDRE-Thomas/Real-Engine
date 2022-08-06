@@ -1,75 +1,155 @@
 #include "Rendering/Material.h"
 
-Material::Material(std::string shaderPath, std::string shaderName)
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <Log.h>
+#include <stdexcept>
+#include <filesystem>
+
+#pragma region static
+
+static const std::filesystem::path shadersArtefactsDirectory = "artefacts/shaders/";
+
+std::map<std::string, Material*> Material::materialsMap;
+
+Material* Material::GetMaterial(std::string materialPath, std::string materialName)
 {
-	programID =  LoadShaders(shaderPath + shaderName + ".vert", shaderPath + shaderName + ".frag");
+	std::string key = materialPath + materialName;
 
-	if (programID == NULL)
+	if (materialsMap.find(key) == materialsMap.end())
+		materialsMap.insert({ key, new Material(materialPath, materialName) });
+
+	return materialsMap[key];
+}
+
+GLuint Material::LoadProgram(std::string materialPath, std::string materialName)
+{
+	std::string vertexCode = LoadCodeFromFile(materialPath + materialName + ".vert");
+	std::string fragmentCode = LoadCodeFromFile(materialPath + materialName + ".frag");
+	xxh::hash64_t codeHash = xxh::xxhash<64>(vertexCode + fragmentCode);
+
+	std::string matID = materialPath + materialName;
+	matID.erase(std::remove(matID.begin(), matID.end(), '/'), matID.end());
+	matID.erase(std::remove(matID.begin(), matID.end(), '\\'), matID.end());
+
+	GLuint loadResult = LoadProgramFromFile(matID, codeHash);
+	if (loadResult != NULL)
+		return loadResult;
+
+	if (vertexCode.empty() || fragmentCode.empty())
 	{
-		Log::Error("Error while loading shaders, reverting to default shader");
+		Log::Error("One or more shader file was empty for material " + materialName + " aborting compilation");
+		return NULL;
+	}
 
-		programID = LoadShaders("res/shaders/default.vert", "res/shaders/default.frag");
+	Log::Message("Compiling shader: " + materialName + "...");
+	GLuint program = CompileProgramFromShadersCode(vertexCode, fragmentCode);
 
-		if (programID == NULL)
-			throw std::runtime_error("Couln't load any shaders for material with shader: " + shaderName);
+	if (program == NULL)
+		return NULL;
+
+	if (SaveProgramToFile(program, matID, codeHash))
+		Log::Message("Material " + materialName + " saved to file.");
+	else
+		Log::Warning("Error while saving material " + materialName + " to file.");
+
+	return program;
+}
+
+GLuint Material::LoadProgramFromFile(std::string materialID, xxh::hash64_t codehash)
+{
+	std::string materialDataFilename = (std::filesystem::current_path() / shadersArtefactsDirectory).string() + materialID;
+
+	if (!std::filesystem::is_regular_file(materialDataFilename + ".shaderbin") || !std::filesystem::is_regular_file(materialDataFilename + ".shadermeta"))
+		return NULL;
+
+	GLuint program = glCreateProgram();
+
+	// Load binary from file
+	std::ifstream binaryInput(materialDataFilename + ".shaderbin", std::ios::binary);
+	std::istreambuf_iterator<char> startIt(binaryInput), endIt;
+	std::vector<char> buffer(startIt, endIt);  // Load file
+	binaryInput.close();
+
+	// Load metadata from file
+	std::ifstream metaInput(materialDataFilename + ".shadermeta", std::ios::app);
+	GLenum format = 0;
+	metaInput.read((char*)&format, sizeof(GLenum));
+	xxh::hash64_t materialCodeHash = 0;
+	metaInput.read((char*)&materialCodeHash, sizeof(xxh::hash64_t));
+	metaInput.close();
+
+	if (materialCodeHash != codehash)
+	{
+		Log::Warning("Material code was changed since last compilation, recompiling material...");
+		return NULL;
+	}
+
+	// Install shader binary
+	glProgramBinary(program, format, buffer.data(), buffer.size());
+
+	// Check for success/failure
+	GLint status;
+	glGetProgramiv(program, GL_LINK_STATUS, &status);
+	if (GL_FALSE == status)
+	{
+		Log::Error("Error while loading material from file");
+		return NULL;
 	}
 }
 
-Material::~Material()
+bool Material::SaveProgramToFile(GLuint programID, std::string materialID, xxh::hash64_t codeHash)
 {
-	if (programID != NULL)
-		glDeleteProgram(programID);
+	GLint formats = 0;
+	glGetIntegerv(GL_NUM_PROGRAM_BINARY_FORMATS, &formats);
+
+	if (formats < 1)
+	{
+		Log::Warning("Driver does not support any binary formats to save program binary.");
+		return false;
+	}
+
+	// Get the binary length
+	GLint length = 0;
+	glGetProgramiv(programID, GL_PROGRAM_BINARY_LENGTH, &length);
+
+	//Get buffer
+	std::vector<GLubyte> buffer(length);
+	GLenum format = 0;
+	glGetProgramBinary(programID, length, NULL, &format, buffer.data());
+
+	if (!std::filesystem::exists(shadersArtefactsDirectory))
+		std::filesystem::create_directories(shadersArtefactsDirectory);
+
+	std::string shaderDataPath = (std::filesystem::current_path() / shadersArtefactsDirectory).string();
+
+	// Write the binary to a file.
+	std::ofstream outBinary(shaderDataPath + materialID + ".shaderbin", std::ios::binary);
+	outBinary.write(reinterpret_cast<char*>(buffer.data()), length);
+	outBinary.close();
+
+	// Write the metadata to a file.
+	std::ofstream outMetadata(shaderDataPath + materialID + ".shadermeta", std::ios::app);
+	outMetadata.write((char*)&format, sizeof(GLenum));
+	outMetadata.write((char*)&codeHash, sizeof(xxh::hash64_t));
+	outMetadata.close();
+
+	return true;
 }
 
-GLint Material::GetProgramID()
-{
-	return programID;
-}
-
-GLuint Material::LoadShaders(std::string vertexFilePath, std::string  fragmentFilePath)
+GLuint Material::CompileProgramFromShadersCode(std::string vertexCode, std::string fragmentCode)
 {
 	// Create the shaders
 	GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
-	// Read the Vertex Shader code from the file
-	std::string vertexShaderCode;
-	std::ifstream vertexShaderStream(vertexFilePath, std::ios::in);
-	if (vertexShaderStream.is_open())
-	{
-		std::stringstream sstr;
-		sstr << vertexShaderStream.rdbuf();
-		vertexShaderCode = sstr.str();
-		vertexShaderStream.close();
-	}
-	else
-	{
-		Log::Error("Impossible to open " + vertexFilePath + ".Are you in the right directory ");
-		return NULL;
-	}
-
-	// Read the Fragment Shader code from the file
-	std::string fragmentShaderCode;
-	std::ifstream fragmentShaderStream(fragmentFilePath, std::ios::in);
-	if (fragmentShaderStream.is_open())
-	{
-		std::stringstream sstr;
-		sstr << fragmentShaderStream.rdbuf();
-		fragmentShaderCode = sstr.str();
-		fragmentShaderStream.close();
-	}
-	else
-	{
-		Log::Error("Impossible to open " + fragmentFilePath + ".Are you in the right directory ");
-		return NULL;
-	}
-
 	GLint compilationResult = GL_FALSE;
 	int infoLogLength;
 
 	// Compile Vertex Shader
-	Log::Message("Compiling shader : " + vertexFilePath);
-	char const* vertexSourcePointer = vertexShaderCode.c_str();
+	char const* vertexSourcePointer = vertexCode.c_str();
 	glShaderSource(vertexShaderID, 1, &vertexSourcePointer, NULL);
 	glCompileShader(vertexShaderID);
 
@@ -81,14 +161,13 @@ GLuint Material::LoadShaders(std::string vertexFilePath, std::string  fragmentFi
 		std::vector<char> vertexShaderErrorMessage(infoLogLength + 1);
 		glGetShaderInfoLog(vertexShaderID, infoLogLength, NULL, &vertexShaderErrorMessage[0]);
 
-		Log::Error("Error while compiling shader " + vertexFilePath + ":");
+		Log::Error("Error while compiling shader: ");
 		Log::Error(&vertexShaderErrorMessage[0]);
 		return NULL;
 	}
 
 	// Compile Fragment Shader
-	Log::Message("Compiling shader : " + fragmentFilePath);
-	char const* FragmentSourcePointer = fragmentShaderCode.c_str();
+	char const* FragmentSourcePointer = fragmentCode.c_str();
 	glShaderSource(fragmentShaderID, 1, &FragmentSourcePointer, NULL);
 	glCompileShader(fragmentShaderID);
 
@@ -100,7 +179,7 @@ GLuint Material::LoadShaders(std::string vertexFilePath, std::string  fragmentFi
 		std::vector<char> fragmentShaderErrorMessage(infoLogLength + 1);
 		glGetShaderInfoLog(fragmentShaderID, infoLogLength, NULL, &fragmentShaderErrorMessage[0]);
 
-		Log::Error("Error while compiling shader " + fragmentFilePath + ":");
+		Log::Error("Error while compiling shader: ");
 		Log::Error(&fragmentShaderErrorMessage[0]);
 		return NULL;
 	}
@@ -119,7 +198,7 @@ GLuint Material::LoadShaders(std::string vertexFilePath, std::string  fragmentFi
 		std::vector<char> programErrorMessage(infoLogLength + 1);
 		glGetProgramInfoLog(programID, infoLogLength, NULL, &programErrorMessage[0]);
 
-		Log::Error("Error while linking program for shaders " + fragmentFilePath + " and " + vertexFilePath + ":");
+		Log::Error("Error while linking program: ");
 		Log::Error(&programErrorMessage[0]);
 		return NULL;
 	}
@@ -130,5 +209,53 @@ GLuint Material::LoadShaders(std::string vertexFilePath, std::string  fragmentFi
 	glDeleteShader(vertexShaderID);
 	glDeleteShader(fragmentShaderID);
 
+	return programID;
+}
+
+std::string Material::LoadCodeFromFile(std::string filePath)
+{
+	std::string shaderCode;
+	std::ifstream shaderCodeStream(filePath, std::ios::in);
+	if (shaderCodeStream.is_open())
+	{
+		std::stringstream sstr;
+		sstr << shaderCodeStream.rdbuf();
+		shaderCode = sstr.str();
+		shaderCodeStream.close();
+
+		return shaderCode;
+	}
+	else
+	{
+		Log::Error("Impossible to open file " + filePath);
+		return std::string();
+	}
+}
+
+#pragma endregion static
+
+Material::Material(std::string materialPath, std::string materialName)
+{
+	programID = LoadProgram(materialPath, materialName);
+
+	if (programID == NULL)
+	{
+		Log::Error("Error while compiling material: " + materialName + ", reverting to default material");
+
+		programID = LoadProgram("res/shaders/", "default");
+
+		if (programID == NULL)
+			throw std::runtime_error("Couln't load any shaders for material: " + materialName);
+	}
+}
+
+Material::~Material()
+{
+	if (programID != NULL)
+		glDeleteProgram(programID);
+}
+
+GLint Material::GetProgramID()
+{
 	return programID;
 }

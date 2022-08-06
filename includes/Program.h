@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Display/Window.h"
-#include "Display/WindowOptions.h"
 #include "Objects/Camera.h"
-#include "Log.h"
 
 class Program
 {
@@ -14,4 +12,5 @@ public:
 public:
 	void InitGraph();
 	void StartLoop();
+	void Stop();
 };

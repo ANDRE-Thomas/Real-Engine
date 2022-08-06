@@ -4,9 +4,8 @@
 #include <GLFW/glfw3.h>
 
 #include "Display/WindowOptions.h"
-#include "Log.h"
-
-#include "Components/Renderer.h"
+#include "Objects/Camera.h"
+#include <stdexcept>
 
 class Window
 {

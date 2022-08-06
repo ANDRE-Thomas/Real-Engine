@@ -1,4 +1,5 @@
 #include "Log.h"
+#include <iostream>
 
 void Log::Message(char* message)
 {

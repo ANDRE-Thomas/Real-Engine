@@ -118,7 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\XXH\include;$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
@@ -145,7 +145,7 @@ xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\XXH\include;$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -169,7 +169,7 @@ xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\XXH\include;$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
@@ -196,8 +196,9 @@ xcopy /y /d  "$(ProjectDir)res\*" "$(OutDir)"</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\XXH\include;$(ProjectDir)external\ASSIMP\include;$(ProjectDir)includes;$(ProjectDir)external\GLFW\include;$(ProjectDir)external\GLEW\include;$(ProjectDir)external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

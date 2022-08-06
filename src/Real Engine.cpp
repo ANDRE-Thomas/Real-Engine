@@ -2,8 +2,6 @@
 #include "Log.h"
 #include "Display/Window.h"
 
-#include <glm/gtx/string_cast.hpp>
-
 Program* program;
 
 int main()
@@ -16,9 +14,14 @@ int main()
 	catch (const GraphInitException& exception)
 	{
 		Log::Error(exception.what());
+	}	
+
+	try
+	{
+		program->StartLoop();
 	}
-
-	program->camera->transform->SetPosition(vec3(1, 0, 10));
-
-	Log::Message(to_string(program->camera->GetRenderMatrix()));
+	catch (const std::runtime_error& error)
+	{
+		Log::Error(error.what());
+	}
 }

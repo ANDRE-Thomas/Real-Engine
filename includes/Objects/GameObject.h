@@ -1,9 +1,8 @@
 #pragma once
+
 #include "Components/Component.h"
 #include "Components/Transform.h"
 #include <vector>
-#include <stdexcept>
-#include <algorithm>
 
 class GameObject
 {

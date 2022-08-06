@@ -1,5 +1,7 @@
 #include "Display/Window.h"
 
+#include "Components/Renderer.h"
+
 Window::Window(WindowOptions options)
 {
 	this->height = options.heigth;

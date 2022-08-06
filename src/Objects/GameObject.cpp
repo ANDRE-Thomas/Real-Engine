@@ -1,5 +1,8 @@
 #include "Objects/GameObject.h"
 
+#include <stdexcept>
+#include <algorithm>
+
 GameObject::GameObject()
 {
 	transform = new Transform();
