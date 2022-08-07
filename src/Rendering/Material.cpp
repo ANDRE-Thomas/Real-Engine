@@ -94,7 +94,7 @@ GLuint Material::LoadProgramFromFile(std::string materialID, xxh::hash64_t codeh
 	GLint status;
 	glGetProgramiv(programID, GL_LINK_STATUS, &status);
 
-	if (GL_FALSE == status)
+	if (status == GL_FALSE)
 	{
 		Log::Error("Error while loading material from file");
 		return NULL;

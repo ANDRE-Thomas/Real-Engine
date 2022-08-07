@@ -7,6 +7,8 @@
 #include "Rendering/Mesh.h"
 #include <vector>
 #include <string>
+#include <filesystem>
+#include <map>
 
 class Model
 {
@@ -16,14 +18,15 @@ public:
 	std::vector<Mesh> GetMeshes();
 
 private:
+	std::filesystem::path path;
 	std::vector<Mesh> meshes;
-	std::string directory;
+	std::map<std::filesystem::path, Texture> modelTextures;
 
-	Model(const aiScene* scene);
+	Model(std::string, const aiScene* scene);
 
 	void ProcessNode(aiNode* node, const aiScene* scene);
 	Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
 
 	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
-	GLuint TextureFromFile(const char* path, const std::string& directory, bool gamma);
+	GLuint TextureFromFile(std::string texturePath);
 };

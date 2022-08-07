@@ -26,7 +26,7 @@ void Program::InitGraph()
 	
 	GameObject* cube = new GameObject();
 
-	cube->AddComponent(new Renderer(Model::LoadModel("res/models/Dino.stl"), Material::GetMaterial("res/shaders/", "default")));
+	cube->AddComponent(new Renderer(Model::LoadModel("res/models/backpack/backpack.obj"), Material::GetMaterial("res/shaders/", "default")));
 	cube->transform->SetPosition(vec3(-3, 0, 0));
 	
 	camera->transform->SetPosition(vec3(2, 0, 10));

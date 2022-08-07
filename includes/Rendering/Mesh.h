@@ -18,6 +18,7 @@ struct Vertex
 struct Texture
 {
 	GLuint textureID;
+	std::string name;
 	std::string type;
 };
 

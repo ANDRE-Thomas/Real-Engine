@@ -41,6 +41,15 @@ void Renderer::Render(Camera* camera)
 	std::vector<Mesh> meshes = model->GetMeshes();
 	for (size_t i = 0; i < nBuffer; i++)
 	{
+		for (size_t j = 0; j < meshes[i].textures.size(); j++)
+		{
+			glActiveTexture(GL_TEXTURE0 + j);
+
+			material->SetInt(meshes[i].textures[j].name, j); //Bind uniform to texture location
+			glBindTexture(GL_TEXTURE_2D, meshes[i].textures[j].textureID); //Bin texture to texture location
+		}
+		glActiveTexture(GL_TEXTURE0);
+
 		glBindVertexArray(VAO[i]);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[i]);
 

@@ -2,6 +2,10 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+
+#define STB_IMAGE_IMPLEMENTATION    
+#include "stb_image.h"
+
 #include "Log.h"
 
 #pragma region Static
@@ -19,13 +23,14 @@ Model* Model::LoadModel(std::string path)
 		return nullptr;
 	}
 
-	return new Model(scene);
+	return new Model(path, scene);
 }
 
 #pragma endregion Static
 
-Model::Model(const aiScene* scene)
+Model::Model(std::string path, const aiScene* scene)
 {
+	this->path = path;
 	ProcessNode(scene->mRootNode, scene);
 }
 
@@ -36,18 +41,14 @@ std::vector<Mesh> Model::GetMeshes()
 
 void Model::ProcessNode(aiNode* node, const aiScene* scene)
 {
-	// Process all the node's meshes (if any)
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	for (size_t i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		meshes.push_back(ProcessMesh(mesh, scene));
 	}
 
-	// Then do the same for each of its children
-	for (unsigned int i = 0; i < node->mNumChildren; i++)
-	{
+	for (size_t i = 0; i < node->mNumChildren; i++)
 		ProcessNode(node->mChildren[i], scene);
-	}
 }
 
 Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
@@ -59,7 +60,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	Vertex vertex{};
 	vec3 vector3{};
 	vec2 vector2{};
-	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+	for (size_t i = 0; i < mesh->mNumVertices; i++)
 	{
 		vector3.x = mesh->mVertices[i].x;
 		vector3.y = mesh->mVertices[i].y;
@@ -78,18 +79,18 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			vertex.texCoords = vector2;
 		}
 		else
-			vertex.texCoords = glm::vec2(0.0f, 0.0f);
+			vertex.texCoords = vec2(0.0f, 0.0f);
 
 		vertices.push_back(vertex);
 	}
 
-	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
+	for (size_t i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
-		for (unsigned int j = 0; j < face.mNumIndices; j++)
+		for (size_t j = 0; j < face.mNumIndices; j++)
 			indices.push_back(face.mIndices[j]);
 	}
-	/*
+
 	if (mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
@@ -100,59 +101,60 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 		std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 	}
-	*/
+
 	return Mesh(vertices, indices, textures);
 }
-/*
+
 std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<Texture> textures;
-	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+
+	aiString textureName;
+	std::string texturePath;
+	for (size_t i = 0; i < mat->GetTextureCount(type); i++)
 	{
-		aiString str;
-		mat->GetTexture(type, i, &str);
-		bool skip = false;
-		for (unsigned int j = 0; j < textures_loaded.size(); j++)
+		mat->GetTexture(type, i, &textureName);
+		texturePath = path.parent_path().string() + "/" + textureName.C_Str();
+
+		auto pair = modelTextures.find(texturePath);
+		if (pair != modelTextures.end())
 		{
-			if (std::strcmp(textures_loaded[j].path.data(), str.C_Str()) == 0)
-			{
-				textures.push_back(textures_loaded[j]);
-				skip = true;
-				break;
-			}
+			textures.push_back(pair->second);
+			continue;
 		}
-		if (!skip)
-		{   // if texture hasn't been loaded already, load it
-			Texture texture;
-			texture.id = TextureFromFile(str.C_Str(), directory);
-			texture.type = typeName;
-			texture.path = str.C_Str();
-			textures.push_back(texture);
-			textures_loaded.push_back(texture); // add to loaded textures
-		}
+
+		GLuint textureID = TextureFromFile(texturePath.c_str());
+		if (textureID == NULL)
+			continue;
+
+		Texture texture;
+		texture.textureID = textureID;
+		texture.name = std::string(textureName.C_Str()).substr(0, std::string(textureName.C_Str()).find_last_of(".")); //Remove file extension from name
+		texture.type = typeName;
+
+		textures.push_back(texture);
+		modelTextures.insert({ texturePath, texture });
 	}
+
 	return textures;
 }
 
-GLuint Model::TextureFromFile(const char* path, const std::string& directory, bool gamma)
+GLuint Model::TextureFromFile(std::string texturePath)
 {
-	std::string filename = std::string(path);
-	filename = directory + '/' + filename;
-
-	GLuint textureID;
-	glGenTextures(1, &textureID);
-
 	int width, height, nrComponents;
-	unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+	stbi_uc* data = stbi_load(texturePath.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
-		GLenum format;
-		if (nrComponents == 1)
-			format = GL_RED;
+		GLenum format = GL_RED;
+		if (nrComponents == 2)
+			format = GL_RG;
 		else if (nrComponents == 3)
 			format = GL_RGB;
 		else if (nrComponents == 4)
 			format = GL_RGBA;
+
+		GLuint textureID;
+		glGenTextures(1, &textureID);
 
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
@@ -164,13 +166,14 @@ GLuint Model::TextureFromFile(const char* path, const std::string& directory, bo
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		stbi_image_free(data);
+
+		return textureID;
 	}
 	else
 	{
-		std::cout << "Texture failed to load at path: " << path << std::endl;
+		Log::Error("Failed to load texture: " + texturePath);
 		stbi_image_free(data);
-	}
 
-	return textureID;
+		return NULL;
+	}
 }
-*/
