@@ -24,7 +24,7 @@ private:
 	Mesh* mesh;
 	Material* material;
 
-	GLuint VBO;
+	GLuint VAO, VBO, EBO;
 
 	void UpdateBuffers();
 };

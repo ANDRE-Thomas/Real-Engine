@@ -6,8 +6,6 @@
 #include "Display/WindowOptions.h"
 #include "Log.h"
 
-#include <glm/gtx/string_cast.hpp>
-
 void Program::InitGraph()
 {
 	if (!glfwInit())
@@ -25,14 +23,14 @@ void Program::InitGraph()
 	}
 
 	camera = new Camera(60.0f, window->GetAspectRatio(), 0.1f, 100.0f);
-
+	
 	GameObject* cube = new GameObject();
 	cube->AddComponent(new Renderer(new Mesh("res/models/Cube.obj"), Material::GetMaterial("res/shaders/", "default")));
-
+	
 	GameObject* cube2 = new GameObject();
 	cube2->AddComponent(new Renderer(new Mesh("res/models/Cube.obj"), Material::GetMaterial("res/shaders/", "default")));
 	cube2->transform->SetPosition(vec3(-3, 0, 0));
-
+	
 	camera->transform->SetPosition(vec3(2, 0, 10));
 	camera->transform->RotateAxis(vec3(0, 1, 0), 45.0f);
 }
@@ -49,8 +47,8 @@ void Program::StartLoop()
 
 void Program::Stop()
 {
-	glfwTerminate();
-
 	if (window != nullptr)
 		delete(window);
+
+	glfwTerminate();
 }

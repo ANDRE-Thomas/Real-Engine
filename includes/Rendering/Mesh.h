@@ -17,4 +17,5 @@ public:
 	~Mesh();
 
 	std::vector<Vertex> vertices;
+	std::vector<unsigned short> indices;
 };

@@ -45,17 +45,17 @@ GLuint Material::LoadProgram(std::string materialPath, std::string materialName)
 	}
 
 	Log::Message("Compiling shader: " + materialName + "...");
-	GLuint program = CompileProgramFromShadersCode(vertexCode, fragmentCode);
+	GLuint programID = CompileProgramFromShadersCode(vertexCode, fragmentCode);
 
-	if (program == NULL)
+	if (programID == NULL)
 		return NULL;
 
-	if (SaveProgramToFile(program, matID, codeHash))
+	if (SaveProgramToFile(programID, matID, codeHash))
 		Log::Message("Material " + materialName + " saved to file.");
 	else
 		Log::Warning("Error while saving material " + materialName + " to file.");
 
-	return program;
+	return programID;
 }
 
 GLuint Material::LoadProgramFromFile(std::string materialID, xxh::hash64_t codehash)

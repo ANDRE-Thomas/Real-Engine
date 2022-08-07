@@ -8,7 +8,7 @@ Window::Window(WindowOptions options)
 	this->width = options.width;
 
 	glfwWindowHint(GLFW_SAMPLES, options.superSampling);
-	glfwWindowHint(GLFW_RESIZABLE, options.resizable ? GL_TRUE : GL_FALSE);
+	glfwWindowHint(GLFW_RESIZABLE, options.resizable);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -26,16 +26,10 @@ Window::Window(WindowOptions options)
 	if (glewInit() != GLEW_OK)
 		throw GraphInitException("Failed to initialize GLEW.");
 
-	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
 	// Set Window clear color
 	glClearColor(options.baseColor.r, options.baseColor.g, options.baseColor.b, 0);
-
-	// VAO
-	GLuint vertexArrayID;
-	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
