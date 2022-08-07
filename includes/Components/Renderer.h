@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Components/Component.h"
-#include "Rendering/Mesh.h"
+#include "Rendering/Model.h"
 #include "Rendering/Material.h"
 #include "Objects/Camera.h"
 
@@ -11,7 +11,7 @@
 class Renderer : public Component
 {
 public:
-	Renderer(Mesh* mesh, Material* material);
+	Renderer(Model* model, Material* material);
 	~Renderer();
 
 	static void RenderAll(Camera* camera);
@@ -21,10 +21,11 @@ public:
 private:
 	static std::vector<Renderer*> renderers;
 
-	Mesh* mesh;
+	Model* model;
 	Material* material;
 
-	GLuint VAO, VBO, EBO;
+	int nBuffer;
+	std::vector<GLuint> VAO, VBO, EBO;
 
 	void UpdateBuffers();
 };

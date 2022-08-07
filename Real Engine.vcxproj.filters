@@ -72,6 +72,9 @@
     <ClCompile Include="src\Rendering\Material.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\Rendering\Model.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\Program.h">
@@ -105,6 +108,9 @@
       <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="includes\Rendering\Material.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Rendering\Model.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>

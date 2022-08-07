@@ -2,9 +2,9 @@
 
 std::vector<Renderer*> Renderer::renderers;
 
-Renderer::Renderer(Mesh* mesh, Material* material)
+Renderer::Renderer(Model* model, Material* material)
 {
-	this->mesh = mesh;
+	this->model = model;
 	this->material = material;
 
 	UpdateBuffers();
@@ -14,21 +14,21 @@ Renderer::Renderer(Mesh* mesh, Material* material)
 
 Renderer::~Renderer()
 {
-	if (mesh != nullptr)
-		delete(mesh);
+	if (model != nullptr)
+		delete(model);
 
 	auto result = std::find(renderers.begin(), renderers.end(), this);
 	if (result != renderers.end())
 		renderers.erase(result);
 
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
-	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(nBuffer, &VBO[0]);
+	glDeleteBuffers(nBuffer, &EBO[0]);
+	glDeleteVertexArrays(nBuffer, &VAO[0]);
 }
 
 void Renderer::RenderAll(Camera* camera)
 {
-	for (int i = renderers.size() - 1; i >= 0; i--)
+	for (size_t i = renderers.size(); i-- > 0;)
 		renderers[i]->Render(camera);
 }
 
@@ -38,40 +38,55 @@ void Renderer::Render(Camera* camera)
 
 	material->SetMat4x4("MVP", camera->GetRenderMatrix() * GetParent()->transform->GetMatrix4x4());
 
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	std::vector<Mesh> meshes = model->GetMeshes();
+	for (size_t i = 0; i < nBuffer; i++)
+	{
+		glBindVertexArray(VAO[i]);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[i]);
 
-	glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_SHORT, (void*)0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+		glDrawElements(GL_TRIANGLES, (GLsizei)meshes[i].indices.size(), GL_UNSIGNED_SHORT, (void*)0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+	}
 }
 
 void Renderer::UpdateBuffers()
 {
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	std::vector<Mesh> meshes = model->GetMeshes();
 
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, mesh->vertices.size() * sizeof(Vertex), &mesh->vertices[0], GL_STATIC_DRAW);
+	nBuffer = (int)meshes.size();
+	VAO = std::vector<GLuint>(nBuffer);
+	VBO = std::vector<GLuint>(nBuffer);
+	EBO = std::vector<GLuint>(nBuffer);
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+	glGenVertexArrays(nBuffer, &VAO[0]);
+	glGenBuffers(nBuffer, &VBO[0]);
+	glGenBuffers(nBuffer, &EBO[0]);
 
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+	for (size_t i = 0; i < nBuffer; i++)
+	{
+		glBindVertexArray(VAO[i]);
 
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+		glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
+		glBufferData(GL_ARRAY_BUFFER, meshes[i].vertices.size() * sizeof(Vertex), &meshes[i].vertices[0], GL_STATIC_DRAW);
 
-	glGenBuffers(1, &EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indices.size() * sizeof(unsigned short), &mesh->indices[0], GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 
-	glDisableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[i]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, meshes[i].indices.size() * sizeof(unsigned short), &meshes[i].indices[0], GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+
+		glDisableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
+	}
 }
