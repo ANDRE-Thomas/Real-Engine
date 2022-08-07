@@ -18,6 +18,7 @@ public:
 	int GetWidth();
 	int GetHeight();
 	float GetAspectRatio();
+	float DeltaTime();
 
 	bool CloseRequested();
 
@@ -25,6 +26,8 @@ private:
 	GLFWwindow* window;
 
 	int height, width;
+	double lastFrame = 0;
+	float deltaTime = 0;
 };
 
 class GraphInitException : public std::runtime_error

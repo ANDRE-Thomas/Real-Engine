@@ -6,6 +6,8 @@
 #include "Display/WindowOptions.h"
 #include "Log.h"
 
+GameObject* backpack;
+
 void Program::InitGraph()
 {
 	if (!glfwInit())
@@ -23,20 +25,18 @@ void Program::InitGraph()
 	}
 
 	camera = new Camera(60.0f, window->GetAspectRatio(), 0.1f, 100.0f);
-	
-	GameObject* cube = new GameObject();
 
-	cube->AddComponent(new Renderer(Model::LoadModel("res/models/backpack/backpack.obj"), Material::GetMaterial("res/shaders/", "default")));
-	cube->transform->SetPosition(vec3(-3, 0, 0));
-	
-	camera->transform->SetPosition(vec3(2, 0, 10));
-	camera->transform->RotateAxis(vec3(0, 1, 0), 45.0f);
+	backpack = new GameObject();
+
+	backpack->AddComponent(new Renderer(Model::LoadModel("res/models/backpack/backpack.obj"), Material::GetMaterial("res/shaders/", "default")));
+	backpack->transform->SetPosition(vec3(0, -1, -6));
 }
 
 void Program::StartLoop()
 {
 	do
 	{
+		backpack->transform->RotateAxis(vec3(0, 1, 0), window->DeltaTime() * 90.0f);
 		window->Draw(camera);
 	} while (!window->CloseRequested());
 

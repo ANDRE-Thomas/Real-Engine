@@ -48,6 +48,9 @@ void Window::Draw(Camera* camera)
 
 	glfwSwapBuffers(window);
 	glfwPollEvents();
+
+	deltaTime = glfwGetTime() - lastFrame;
+	lastFrame = glfwGetTime();
 }
 
 int Window::GetWidth()
@@ -63,6 +66,11 @@ int Window::GetHeight()
 float Window::GetAspectRatio()
 {
 	return (float)width / (float)height;
+}
+
+float Window::DeltaTime()
+{
+	return deltaTime;
 }
 
 bool Window::CloseRequested()
