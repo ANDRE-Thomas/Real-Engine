@@ -31,5 +31,5 @@ DirectionalLight::~DirectionalLight()
 
 LightInfos DirectionalLight::GetLightInfos()
 {
-	return LightInfos(GetParent()->GetChild<Transform>()->Forward(), true, lightColor, 1, 0, 0, vec3(1, 1, 1), vec3(1, 1, 1), vec3(1, 1, 1));
+	return LightInfos(DIRECTIONAL_LIGHT, GetParent()->GetChild<Transform>()->Forward(), true, lightColor, 1, 0, 0, vec3(1, 1, 1), vec3(1, 1, 1), vec3(1, 1, 1));
 }

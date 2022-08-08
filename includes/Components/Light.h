@@ -3,31 +3,38 @@
 #include "Components/Component.h"
 #include <vector>
 #include <stdexcept>
+#include <cstdlib>
+
+const int DIRECTIONAL_LIGHT = 0;
+const int POINT_LIGHT = 1;
+const int SPOT_LIGHT = 2;
 
 struct LightInfos
 {
-	vec4 lightPositionOrDirection;
-	vec3 lightColor;
+	int type;
+	alignas(16) vec4 lightPosition;
+	alignas(16) vec4 lightColor;
 
 	float constant;
 	float linear;
 	float quadratic;
 
-	vec3 ambient;
-	vec3 diffuse;
-	vec3 specular;
+	alignas(16) vec4 ambient;
+	alignas(16) vec4 diffuse;
+	alignas(16) vec4 specular;
 
-	LightInfos(vec3 lightPositionOrDirection, bool isDirectional, vec3 lightColor, float constant,
+	LightInfos(int type, vec3 lightPosition, bool isDirectional, vec3 lightColor, float constant,
 		float linear, float quadratic, vec3 ambient, vec3 diffuse, vec3 specular)
 	{
-		this->lightPositionOrDirection = vec4(lightPositionOrDirection, isDirectional ? 0 : 1);
-		this->lightColor = lightColor;
+		this->type = type;
+		this->lightPosition = vec4(lightPosition, 1);
+		this->lightColor = vec4(lightColor, 1);
 		this->constant = constant;
 		this->linear = linear;
 		this->quadratic = quadratic;
-		this->ambient = ambient;
-		this->diffuse = diffuse;
-		this->specular = specular;
+		this->ambient = vec4(ambient, 1);
+		this->diffuse = vec4(diffuse, 1);
+		this->specular = vec4(specular, 1);
 	}
 };
 
