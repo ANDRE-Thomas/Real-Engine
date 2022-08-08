@@ -252,6 +252,11 @@ Material::Material(std::string materialPath, std::string materialName)
 	}
 }
 
+Material::Material(std::string materialPath, std::string materialName, std::vector<Texture> textures) : Material(materialPath, materialName)
+{
+	this->textures = textures;
+}
+
 Material::~Material()
 {
 	if (programID != NULL)
@@ -261,6 +266,16 @@ Material::~Material()
 GLint Material::GetProgramID()
 {
 	return programID;
+}
+
+std::vector<Texture> Material::GetTextures()
+{
+	return textures;
+}
+
+void Material::AddTextures(std::vector<Texture> textures)
+{
+	this->textures.insert(this->textures.end(), textures.begin(), textures.end());
 }
 
 void Material::SetBool(const std::string& name, bool value)
@@ -276,6 +291,16 @@ void Material::SetInt(const std::string& name, int value)
 void Material::SetFloat(const std::string& name, float value)
 {
 	glUniform1f(glGetUniformLocation(programID, name.c_str()), value);
+}
+
+void Material::SetVec3(const std::string& name, vec3 value)
+{
+	glUniform3f(glGetUniformLocation(programID, name.c_str()), value.x, value.y, value.z);
+}
+
+void Material::SetMat3x3(const std::string& name, mat3x3 value)
+{
+	glUniformMatrix3fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, &value[0][0]);
 }
 
 void Material::SetMat4x4(const std::string& name, mat4x4 value)

@@ -9,6 +9,8 @@ using namespace glm;
 #include <string>
 #include "xxhash.hpp"
 
+#include "Rendering/Texture.h"
+
 class Material
 {
 public:
@@ -27,15 +29,21 @@ private:
 
 public:
 	GLint GetProgramID();
+	std::vector<Texture> GetTextures();
+	void AddTextures(std::vector<Texture> textures);
 
 	void SetBool(const std::string& name, bool value);
 	void SetInt(const std::string& name, int value);
 	void SetFloat(const std::string& name, float value);
+	void SetVec3(const std::string& name, vec3 value);
+	void SetMat3x3(const std::string& name, mat3x3 value);
 	void SetMat4x4(const std::string& name, mat4x4 value);
 
 private:
 	GLint programID;
+	std::vector<Texture> textures;
 
 	Material(std::string materialPath, std::string materialName);
+	Material(std::string materialPath, std::string materialName, std::vector<Texture> textures);
 	~Material();
 };

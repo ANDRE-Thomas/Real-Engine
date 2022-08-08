@@ -4,11 +4,10 @@
 #include "Log.h"
 #include <vector>
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned short> indices, std::vector<Texture> textures)
+Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned short> indices)
 {
 	this->vertices = vertices;
 	this->indices = indices;
-	this->textures = textures;
 }
 
 Mesh::~Mesh()

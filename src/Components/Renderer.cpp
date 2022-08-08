@@ -1,5 +1,7 @@
 #include "Components/Renderer.h"
 
+#include "Components/DirectionalLight.h"
+
 std::vector<Renderer*> Renderer::renderers;
 
 Renderer::Renderer(Model* model, Material* material)
@@ -34,20 +36,34 @@ void Renderer::RenderAll(Camera* camera)
 
 void Renderer::Render(Camera* camera)
 {
-	glUseProgram(material->GetProgramID());
+	GLuint programID = material->GetProgramID();
+	glUseProgram(programID);
 
+	material->SetVec3("viewPosition", camera->transform->GetPosition());
 	material->SetMat4x4("MVP", camera->GetRenderMatrix() * GetParent()->transform->GetMatrix4x4());
+	material->SetMat4x4("modelMat", GetParent()->transform->GetMatrix4x4());
+	material->SetMat3x3("normalMat", transpose(inverse(mat3x3(GetParent()->transform->GetMatrix4x4()))));
+
+	DirectionalLight* mainLight = DirectionalLight::GetInstance();
+
+	if (mainLight != nullptr)
+	{
+		material->SetVec3("mainLight.lightPosition", mainLight->GetParent()->transform->GetPosition());
+		material->SetVec3("mainLight.lightColor", mainLight->lightColor);
+	}
 
 	std::vector<Mesh> meshes = model->GetMeshes();
 	for (size_t i = 0; i < nBuffer; i++)
 	{
-		for (size_t j = 0; j < meshes[i].textures.size(); j++)
+		std::vector<Texture> textures = material->GetTextures();
+		for (size_t j = 0; j < textures.size(); j++)
 		{
 			glActiveTexture(GL_TEXTURE0 + j);
 
-			material->SetInt(meshes[i].textures[j].name, j); //Bind uniform to texture location
-			glBindTexture(GL_TEXTURE_2D, meshes[i].textures[j].textureID); //Bin texture to texture location
+			material->SetInt("material." + textures[j].GetName(), j); //Bind uniform to texture location
+			glBindTexture(GL_TEXTURE_2D, textures[j].GetID()); //Bind texture to texture location
 		}
+
 		glActiveTexture(GL_TEXTURE0);
 
 		glBindVertexArray(VAO[i]);
@@ -83,10 +99,13 @@ void Renderer::UpdateBuffers()
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
 
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+
+		glEnableVertexAttribArray(3);
+		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[i]);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, meshes[i].indices.size() * sizeof(unsigned short), &meshes[i].indices[0], GL_STATIC_DRAW);
@@ -97,5 +116,6 @@ void Renderer::UpdateBuffers()
 		glDisableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
+		glEnableVertexAttribArray(3);
 	}
 }

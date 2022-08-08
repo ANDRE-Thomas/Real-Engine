@@ -3,14 +3,14 @@
 Transform::Transform()
 {
 	this->position = vec3(0);
-	this->rotation = quat();
+	this->rotation = quat_identity<f32, highp>();
 	this->scale = vec3(1);
 }
 
 Transform::Transform(vec3 position)
 {
 	this->position = position;
-	this->rotation = quat();
+	this->rotation = quat_identity<f32, highp>();
 	this->scale = vec3(1);
 }
 
@@ -100,15 +100,18 @@ void Transform::Rotate(quat rotation)
 	this->rotation = rotation * this->rotation;
 }
 
+#include "Log.h"
+#include <glm/gtx/string_cast.hpp>
+
 void Transform::RotateAxis(vec3 axis, float angle)
 {
-	this->rotation = quat_cast(rotate(mat4_cast(GetRotation()), radians(angle), axis));
+	this->rotation = quat_cast(rotate(radians(angle), axis)) * this->rotation;
 }
 
 mat4 Transform::GetMatrix4x4()
 {
 	mat4 translation = translate(mat4(1), position);
-	mat4 rotation = mat4_cast(this->rotation);
+	mat4 rotation = glm::mat4_cast(this->rotation);
 	mat4 scale = glm::scale(this->scale);
 
 	return translation * rotation * scale;

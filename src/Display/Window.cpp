@@ -33,6 +33,9 @@ Window::Window(WindowOptions options)
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 }
 
 Window::~Window()
@@ -49,7 +52,7 @@ void Window::Draw(Camera* camera)
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 
-	deltaTime = glfwGetTime() - lastFrame;
+	deltaTime = float(glfwGetTime() - lastFrame);
 	lastFrame = glfwGetTime();
 }
 

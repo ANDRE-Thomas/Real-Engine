@@ -11,7 +11,7 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
-	for (int i = components.size() - 1; i >= 0; i--)
+	for (size_t i = components.size(); i-- > 0;)
 		delete(components[i]);
 }
 
