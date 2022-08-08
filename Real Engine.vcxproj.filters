@@ -37,6 +37,9 @@
     <Filter Include="Header Files\Rendering">
       <UniqueIdentifier>{dfe028ac-14bc-4373-8c69-a6eebfc46327}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{f4d9659b-2afb-4f11-abb8-d42b8b1a6dd7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Real Engine.cpp">
@@ -83,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="src\Rendering\Texture.cpp">
       <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Objects\Object.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,9 +137,24 @@
     <ClInclude Include="includes\Rendering\Texture.h">
       <Filter>Header Files\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="includes\Objects\Object.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="res\shaders\default.vert" />
-    <CustomBuild Include="res\shaders\default.frag" />
+    <CustomBuild Include="res\shaders\textured.vert">
+      <Filter>Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\shaders\textured.frag">
+      <Filter>Shaders</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\default.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="res\shaders\default.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

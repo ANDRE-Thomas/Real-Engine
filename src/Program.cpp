@@ -28,12 +28,13 @@ void Program::InitGraph()
 	camera = new Camera(60.0f, window->GetAspectRatio(), 0.1f, 100.0f);
 
 	GameObject* mainlight = new GameObject();
-	mainlight->AddComponent(new DirectionalLight(vec3(1.0f, 1.0f, 1.0f)));
-	mainlight->transform->SetPosition(vec3(3, 3, 5));
+	mainlight->AddChild(new DirectionalLight(vec3(1.0f, 1.0f, 1.0f)));
+	mainlight->transform->position = vec3(3, 3, 5);
+	mainlight->transform->RotateAxis(vec3(0,1,0), 180.0f);
 
 	backpack = new GameObject();
 
-	Material* backpackMaterial = Material::GetMaterial("res/shaders/", "default");
+	Material* backpackMaterial = Material::GetMaterial("res/shaders/", "textured");
 	backpackMaterial->AddTextures(std::vector<Texture> {
 		Texture::LoadTexture("res/models/backpack/ambient.jpg", "ambient"),
 		Texture::LoadTexture("res/models/backpack/diffuse.jpg", "diffuse"),
@@ -42,8 +43,14 @@ void Program::InitGraph()
 		Texture::LoadTexture("res/models/backpack/specular.jpg", "specular")
 	});
 
-	backpack->AddComponent(new Renderer(Model::LoadModel("res/models/backpack/backpack.obj", false), backpackMaterial));
-	backpack->transform->SetPosition(vec3(0, -1, -6));
+	backpack->AddChild(new Renderer(Model::LoadModel("res/models/backpack/backpack.obj", false), backpackMaterial));
+	backpack->transform->position = vec3(0, -1, -6);
+
+	GameObject* ground = new GameObject();
+
+	ground->AddChild(new Renderer(Model::LoadModel("res/models/cube.obj", false)));
+	ground->transform->position = vec3(0, -4, -6);
+	ground->transform->scale = vec3(100, 1, 100);
 }
 
 void Program::StartLoop()

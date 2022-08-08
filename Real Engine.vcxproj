@@ -28,6 +28,7 @@
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Objects\Camera.cpp" />
     <ClCompile Include="src\Objects\GameObject.cpp" />
+    <ClCompile Include="src\Objects\Object.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Real Engine.cpp" />
     <ClCompile Include="src\Rendering\Material.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="includes\Log.h" />
     <ClInclude Include="includes\Objects\Camera.h" />
     <ClInclude Include="includes\Objects\GameObject.h" />
+    <ClInclude Include="includes\Objects\Object.h" />
     <ClInclude Include="includes\Program.h" />
     <ClInclude Include="includes\Rendering\Material.h" />
     <ClInclude Include="includes\Rendering\Mesh.h" />
@@ -53,7 +55,7 @@
     <ClInclude Include="includes\Rendering\Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="res\shaders\default.vert">
+    <CustomBuild Include="res\shaders\textured.vert">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
@@ -62,13 +64,17 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="res\shaders\default.frag">
+    <CustomBuild Include="res\shaders\textured.frag">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\default.frag" />
+    <None Include="res\shaders\default.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

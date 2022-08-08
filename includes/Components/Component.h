@@ -1,16 +1,10 @@
 #pragma once
 
-class GameObject; //No include because of circular dependency
+#include "Objects/Object.h"
 
-class Component
+class Component : public Object
 {
 public:
-	Component();
-	~Component();
-
-	GameObject* GetParent();
-	void Register(GameObject* parent);
-
-private:
-	GameObject* gameObject;
+	Component() : Object() {}
+	~Component() {}
 };

@@ -1,20 +1,13 @@
 #pragma once
 
-#include "Components/Component.h"
+#include "Objects/Object.h"
 #include "Components/Transform.h"
-#include <vector>
 
-class GameObject
+class GameObject : public Object
 {
 public:
 	Transform* transform;
 
 	GameObject();
-	~GameObject();
-
-	void AddComponent(Component* component);
-	void RemoveComponent(Component* component);
-
-private:
-	std::vector<Component*> components;
+	~GameObject() {}
 };

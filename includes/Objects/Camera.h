@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Objects/GameObject.h"
-#include <glm/glm.hpp>
-using namespace glm;
 
 class Camera : public GameObject
 {

@@ -1,8 +1,9 @@
 #include "Components/DirectionalLight.h"
 
 #include "Log.h"
+#include "Components/Transform.h"
 
-DirectionalLight*  DirectionalLight::instance;
+DirectionalLight* DirectionalLight::instance;
 
 DirectionalLight* DirectionalLight::GetInstance()
 {
@@ -24,4 +25,11 @@ DirectionalLight::~DirectionalLight()
 {
 	if (instance == this)
 		instance = nullptr;
+}
+
+#include "Log.h"
+
+LightInfos DirectionalLight::GetLightInfos()
+{
+	return LightInfos(GetParent()->GetChild<Transform>()->Forward(), true, lightColor, 1, 0, 0, vec3(1, 1, 1), vec3(1, 1, 1), vec3(1, 1, 1));
 }

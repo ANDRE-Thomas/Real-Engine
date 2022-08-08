@@ -1,6 +1,6 @@
 #include "Rendering/Mesh.h"
 
-#include <glm/gtx/string_cast.hpp>
+
 #include "Log.h"
 #include <vector>
 

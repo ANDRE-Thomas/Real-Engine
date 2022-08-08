@@ -1,34 +1,34 @@
 #include "Components/Transform.h"
 
-Transform::Transform()
+Transform::Transform() : Component()
 {
 	this->position = vec3(0);
 	this->rotation = quat_identity<f32, highp>();
 	this->scale = vec3(1);
 }
 
-Transform::Transform(vec3 position)
+Transform::Transform(vec3 position) : Component()
 {
 	this->position = position;
 	this->rotation = quat_identity<f32, highp>();
 	this->scale = vec3(1);
 }
 
-Transform::Transform(vec3 position, quat rotation)
+Transform::Transform(vec3 position, quat rotation) : Component()
 {
 	this->position = position;
 	this->rotation = rotation;
 	this->scale = vec3(1);
 }
 
-Transform::Transform(vec3 position, quat rotation, vec3 scale)
+Transform::Transform(vec3 position, quat rotation, vec3 scale) : Component()
 {
 	this->position = position;
 	this->rotation = rotation;
 	this->scale = scale;
 }
 
-Transform::Transform(mat4 matrix4x4)
+Transform::Transform(mat4 matrix4x4) : Component()
 {
 	position = vec3(matrix4x4[3][0], matrix4x4[3][1], matrix4x4[3][2]);
 
@@ -55,35 +55,21 @@ Transform::Transform(mat4 matrix4x4)
 	rotation = quat_cast(rotationMatrix);
 }
 
-vec3 Transform::GetPosition()
+vec3 Transform::Forward()
 {
-	return position;
+	return vec3(0, 0, 1) * rotation;
 }
 
-vec3 Transform::GetScale()
+vec3 Transform::Up()
 {
-	return scale;
+	return vec3(0, 1, 0) * rotation;
 }
 
-quat Transform::GetRotation()
+vec3 Transform::Right()
 {
-	return rotation;
+	return vec3(1, 0, 0) * rotation;
 }
 
-void Transform::SetPosition(vec3 position)
-{
-	this->position = position;
-}
-
-void Transform::SetScale(vec3 scale)
-{
-	this->scale = scale;
-}
-
-void Transform::SetRotation(quat quaternion)
-{
-	this->rotation = rotation;
-}
 
 void Transform::Translate(vec3 translation)
 {
@@ -99,9 +85,6 @@ void Transform::Rotate(quat rotation)
 {
 	this->rotation = rotation * this->rotation;
 }
-
-#include "Log.h"
-#include <glm/gtx/string_cast.hpp>
 
 void Transform::RotateAxis(vec3 axis, float angle)
 {

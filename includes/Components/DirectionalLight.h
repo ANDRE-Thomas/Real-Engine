@@ -13,4 +13,7 @@ private:
 public:
 	DirectionalLight(vec3 lightColor);
 	~DirectionalLight();
+
+private:
+	virtual LightInfos GetLightInfos();
 };

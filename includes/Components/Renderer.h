@@ -11,16 +11,21 @@
 class Renderer : public Component
 {
 public:
-	Renderer(Model* model, Material* material);
-	~Renderer();
-
 	static void RenderAll(Camera* camera);
+	static void UpdateGlobalBuffers();
+
+private:
+	static std::vector<Renderer*> renderers;
+	static GLuint lightsSSBO;
+
+public:
+	Renderer(Model* model, Material* material);
+	Renderer(Model* model);
+	~Renderer();
 
 	void Render(Camera* camera);
 
 private:
-	static std::vector<Renderer*> renderers;
-
 	Model* model;
 	Material* material;
 
