@@ -23,11 +23,11 @@ struct LightInfos
 	alignas(16) vec4 diffuse;
 	alignas(16) vec4 specular;
 
-	LightInfos(int type, vec3 lightPosition, bool isDirectional, vec3 lightColor, float constant,
+	LightInfos(int type, vec3 lightPosition, vec3 lightColor, float constant,
 		float linear, float quadratic, vec3 ambient, vec3 diffuse, vec3 specular)
 	{
 		this->type = type;
-		this->lightPosition = vec4(lightPosition, 1);
+		this->lightPosition = vec4(lightPosition, type == DIRECTIONAL_LIGHT ? 0 : 1);
 		this->lightColor = vec4(lightColor, 1);
 		this->constant = constant;
 		this->linear = linear;
@@ -48,11 +48,9 @@ public:
 public:
 	vec3 lightColor;
 
-	virtual ~Light();
-
 protected:
 	Light(vec3 lightColor);
+	~Light();
 
-private:
 	virtual LightInfos GetLightInfos() { throw std::runtime_error("GetLightInfos was not implemented"); };
 };

@@ -87,11 +87,11 @@ void Renderer::Render(Camera* camera)
 	for (size_t i = 0; i < nBuffer; i++)
 	{
 		glBindVertexArray(VAO[i]);
-		
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, lightsSSBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[i]);
 
 		glDrawElements(GL_TRIANGLES, (GLsizei)meshes[i].indices.size(), GL_UNSIGNED_SHORT, (void*)0);
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 		glBindVertexArray(0);

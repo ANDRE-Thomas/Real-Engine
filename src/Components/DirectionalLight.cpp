@@ -16,7 +16,7 @@ DirectionalLight::DirectionalLight(vec3 lightColor) : Light(lightColor)
 	if (instance != nullptr)
 	{
 		Log::Warning("Can't have more than one directional light!");
-		delete(this);
+		return;
 	}
 
 	instance = this;
@@ -28,9 +28,7 @@ DirectionalLight::~DirectionalLight()
 		instance = nullptr;
 }
 
-#include "Log.h"
-
 LightInfos DirectionalLight::GetLightInfos()
 {
-	return LightInfos(DIRECTIONAL_LIGHT, GetParent()->transform->Forward(), true, lightColor, 1, 0, 0, vec3(1, 1, 1), vec3(1, 1, 1), vec3(1, 1, 1));
+	return LightInfos(DIRECTIONAL_LIGHT, GetParent()->transform->Forward(), lightColor, 1, 0, 0, vec3(0.15, 0.15, 0.15), vec3(1, 1, 1), vec3(1, 1, 1));
 }

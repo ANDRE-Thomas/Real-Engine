@@ -22,6 +22,7 @@
     <ClCompile Include="src\Components\Component.cpp" />
     <ClCompile Include="src\Components\DirectionalLight.cpp" />
     <ClCompile Include="src\Components\Light.cpp" />
+    <ClCompile Include="src\Components\PointLight.cpp" />
     <ClCompile Include="src\Components\Renderer.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Display\Window.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="includes\Components\Component.h" />
     <ClInclude Include="includes\Components\DirectionalLight.h" />
     <ClInclude Include="includes\Components\Light.h" />
+    <ClInclude Include="includes\Components\PointLight.h" />
     <ClInclude Include="includes\Components\Renderer.h" />
     <ClInclude Include="includes\Components\Transform.h" />
     <ClInclude Include="includes\Display\Window.h" />

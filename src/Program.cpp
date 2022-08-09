@@ -5,6 +5,7 @@
 #include "Components/Renderer.h"
 #include "Components/Transform.h"
 #include "Components/DirectionalLight.h"
+#include "Components/PointLight.h"
 #include "Display/WindowOptions.h"
 #include "Log.h"
 
@@ -27,11 +28,19 @@ void Program::InitGraph()
 	}
 
 	camera = new Camera(60.0f, window->GetAspectRatio(), 0.1f, 100.0f);
-
+/*
 	GameObject* mainlight = new GameObject();
 	mainlight->AddComponent(new DirectionalLight(vec3(1.0f, 1.0f, 1.0f)));
 	mainlight->transform->position = vec3(3, 3, 5);
 	mainlight->transform->RotateAxis(vec3(0,1,0), 180.0f);
+*/
+	GameObject* pointLight = new GameObject();
+	pointLight->AddComponent(new PointLight(vec3(1, 1, 0)));
+	pointLight->transform->position = vec3(2, 0, -3);
+
+	pointLight = new GameObject();
+	pointLight->AddComponent(new PointLight(vec3(1, 0, 1)));
+	pointLight->transform->position = vec3(-2, 0, -3);
 
 	backpack = new GameObject();
 

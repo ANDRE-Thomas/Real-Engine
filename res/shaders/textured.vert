@@ -21,7 +21,7 @@ void main(){
 	vec4 position = MVP * vec4(inPosition, 1);
 	gl_Position = position;
 
-	vsOut.fragPosition = inPosition;
+	vsOut.fragPosition = vec3(modelMat * vec4(inPosition, 1));
 	vsOut.normal = normalMat * inNormal;
 	vsOut.tangent = inTangent;
 	vsOut.texCoord = inTexCoord;
