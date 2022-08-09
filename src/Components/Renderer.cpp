@@ -60,15 +60,17 @@ Renderer::~Renderer()
 	glDeleteVertexArrays(nBuffer, &VAO[0]);
 }
 
+#include "Components/Transform.h"
+
 void Renderer::Render(Camera* camera)
 {
 	GLuint programID = material->GetProgramID();
 	glUseProgram(programID);
 
 	material->SetVec3("viewPosition", camera->transform->position);
-	material->SetMat4x4("MVP", camera->GetRenderMatrix() * GetParent()->GetChild<Transform>()->GetMatrix4x4());
-	material->SetMat4x4("modelMat", GetParent()->GetChild<Transform>()->GetMatrix4x4());
-	material->SetMat3x3("normalMat", transpose(inverse(mat3x3(GetParent()->GetChild<Transform>()->GetMatrix4x4()))));
+	material->SetMat4x4("MVP", camera->GetRenderMatrix() * GetParent()->transform->GetMatrix4x4());
+	material->SetMat4x4("modelMat", GetParent()->transform->GetMatrix4x4());
+	material->SetMat3x3("normalMat", transpose(inverse(mat3x3(GetParent()->transform->GetMatrix4x4()))));
 
 	std::vector<Texture> textures = material->GetTextures();
 	for (size_t j = 0; j < textures.size(); j++)

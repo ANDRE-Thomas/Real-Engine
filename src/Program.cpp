@@ -3,6 +3,7 @@
 #include "Objects/GameObject.h"
 #include "Rendering/Mesh.h"
 #include "Components/Renderer.h"
+#include "Components/Transform.h"
 #include "Components/DirectionalLight.h"
 #include "Display/WindowOptions.h"
 #include "Log.h"
@@ -28,7 +29,7 @@ void Program::InitGraph()
 	camera = new Camera(60.0f, window->GetAspectRatio(), 0.1f, 100.0f);
 
 	GameObject* mainlight = new GameObject();
-	mainlight->AddChild(new DirectionalLight(vec3(1.0f, 1.0f, 1.0f)));
+	mainlight->AddComponent(new DirectionalLight(vec3(1.0f, 1.0f, 1.0f)));
 	mainlight->transform->position = vec3(3, 3, 5);
 	mainlight->transform->RotateAxis(vec3(0,1,0), 180.0f);
 
@@ -43,12 +44,12 @@ void Program::InitGraph()
 		Texture::LoadTexture("res/models/backpack/specular.jpg", "specular")
 	});
 
-	backpack->AddChild(new Renderer(Model::LoadModel("res/models/backpack/backpack.obj", false), backpackMaterial));
+	backpack->AddComponent(new Renderer(Model::LoadModel("res/models/backpack/backpack.obj", false), backpackMaterial));
 	backpack->transform->position = vec3(0, -1, -6);
 
 	GameObject* ground = new GameObject();
 
-	ground->AddChild(new Renderer(Model::LoadModel("res/models/cube.obj", false)));
+	ground->AddComponent(new Renderer(Model::LoadModel("res/models/cube.obj", false)));
 	ground->transform->position = vec3(0, -4, -6);
 	ground->transform->scale = vec3(100, 1, 100);
 }

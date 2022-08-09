@@ -28,7 +28,6 @@
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Objects\Camera.cpp" />
     <ClCompile Include="src\Objects\GameObject.cpp" />
-    <ClCompile Include="src\Objects\Object.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Real Engine.cpp" />
     <ClCompile Include="src\Rendering\Material.cpp" />
@@ -47,7 +46,6 @@
     <ClInclude Include="includes\Log.h" />
     <ClInclude Include="includes\Objects\Camera.h" />
     <ClInclude Include="includes\Objects\GameObject.h" />
-    <ClInclude Include="includes\Objects\Object.h" />
     <ClInclude Include="includes\Program.h" />
     <ClInclude Include="includes\Rendering\Material.h" />
     <ClInclude Include="includes\Rendering\Mesh.h" />

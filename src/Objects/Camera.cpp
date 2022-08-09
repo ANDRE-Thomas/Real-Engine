@@ -1,5 +1,7 @@
 #include "Objects/Camera.h"
 
+#include "Components/Transform.h"
+
 Camera::Camera(float fov, float ratio, float nearPlane, float farPlane) : GameObject()
 {
 	projectionMatrix = perspective(radians(fov), ratio, nearPlane, farPlane);

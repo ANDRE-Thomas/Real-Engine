@@ -1,10 +1,29 @@
 #pragma once
 
-#include "Objects/Object.h"
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/string_cast.hpp>
+using namespace glm;
 
-class Component : public Object
+class Transform;
+class GameObject;
+
+class Component
 {
+	friend class GameObject;
+
 public:
-	Component() : Object() {}
-	~Component() {}
+	Component();
+
+	GameObject* GetParent();
+	Transform* GetTransform();
+
+protected:
+	~Component();
+
+private:
+	GameObject* parent = nullptr;
+
+	void RegisterParent(GameObject* parent);
 };

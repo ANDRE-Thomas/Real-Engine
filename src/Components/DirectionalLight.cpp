@@ -2,6 +2,7 @@
 
 #include "Log.h"
 #include "Components/Transform.h"
+#include "Objects/GameObject.h"
 
 DirectionalLight* DirectionalLight::instance;
 
@@ -31,5 +32,5 @@ DirectionalLight::~DirectionalLight()
 
 LightInfos DirectionalLight::GetLightInfos()
 {
-	return LightInfos(DIRECTIONAL_LIGHT, GetParent()->GetChild<Transform>()->Forward(), true, lightColor, 1, 0, 0, vec3(1, 1, 1), vec3(1, 1, 1), vec3(1, 1, 1));
+	return LightInfos(DIRECTIONAL_LIGHT, GetParent()->transform->Forward(), true, lightColor, 1, 0, 0, vec3(1, 1, 1), vec3(1, 1, 1), vec3(1, 1, 1));
 }

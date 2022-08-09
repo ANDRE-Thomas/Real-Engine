@@ -87,9 +87,6 @@
     <ClCompile Include="src\Rendering\Texture.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Objects\Object.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\Program.h">
@@ -136,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="includes\Rendering\Texture.h">
       <Filter>Header Files\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Objects\Object.h">
-      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
