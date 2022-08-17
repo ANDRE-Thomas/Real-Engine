@@ -57,9 +57,6 @@
     <ClCompile Include="src\Components\Transform.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Objects\Camera.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="src\Objects\GameObject.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -90,6 +87,15 @@
     <ClCompile Include="src\Components\PointLight.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Components\Camera.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\RenderingPipeline.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\DefaultRP.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="includes\Program.h">
@@ -106,9 +112,6 @@
     </ClInclude>
     <ClInclude Include="includes\Components\Transform.h">
       <Filter>Header Files\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="includes\Objects\Camera.h">
-      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="includes\Objects\GameObject.h">
       <Filter>Header Files\Objects</Filter>
@@ -140,6 +143,18 @@
     <ClInclude Include="includes\Components\PointLight.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="includes\Rendering\IRenderingViewPoint.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Components\Camera.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Rendering\RenderingPipeline.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="includes\Rendering\DefaultRP.h">
+      <Filter>Header Files\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="res\shaders\textured.vert">
@@ -150,10 +165,16 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\default.frag">
+    <None Include="res\internals\shaders\default.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="res\shaders\default.vert">
+    <None Include="res\internals\shaders\default.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="res\internals\shaders\simpleDepthShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="res\internals\shaders\simpleDepthShader.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

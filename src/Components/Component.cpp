@@ -1,7 +1,8 @@
 #include "Components/Component.h"
 
-#include "Objects/GameObject.h"
+#include <stdexcept>
 
+#include "Objects/GameObject.h"
 #include "Log.h"
 
 Component::Component() 
@@ -14,11 +15,17 @@ Component::~Component()
 
 GameObject* Component::GetParent()
 {
+	if (parent == nullptr)
+		throw std::runtime_error("Component has no parent.");
+
 	return parent;
 }
 
 Transform* Component::GetTransform()
 {
+	if (parent == nullptr)
+		throw std::runtime_error("Component has no parent.");
+
 	return parent->transform;
 }
 

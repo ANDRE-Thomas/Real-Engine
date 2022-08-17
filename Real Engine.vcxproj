@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Camera.cpp" />
     <ClCompile Include="src\Components\Component.cpp" />
     <ClCompile Include="src\Components\DirectionalLight.cpp" />
     <ClCompile Include="src\Components\Light.cpp" />
@@ -27,16 +28,18 @@
     <ClCompile Include="src\Components\Transform.cpp" />
     <ClCompile Include="src\Display\Window.cpp" />
     <ClCompile Include="src\Log.cpp" />
-    <ClCompile Include="src\Objects\Camera.cpp" />
     <ClCompile Include="src\Objects\GameObject.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\Real Engine.cpp" />
+    <ClCompile Include="src\Rendering\DefaultRP.cpp" />
     <ClCompile Include="src\Rendering\Material.cpp" />
     <ClCompile Include="src\Rendering\Mesh.cpp" />
     <ClCompile Include="src\Rendering\Model.cpp" />
+    <ClCompile Include="src\Rendering\RenderingPipeline.cpp" />
     <ClCompile Include="src\Rendering\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="includes\Components\Camera.h" />
     <ClInclude Include="includes\Components\Component.h" />
     <ClInclude Include="includes\Components\DirectionalLight.h" />
     <ClInclude Include="includes\Components\Light.h" />
@@ -46,12 +49,14 @@
     <ClInclude Include="includes\Display\Window.h" />
     <ClInclude Include="includes\Display\WindowOptions.h" />
     <ClInclude Include="includes\Log.h" />
-    <ClInclude Include="includes\Objects\Camera.h" />
     <ClInclude Include="includes\Objects\GameObject.h" />
     <ClInclude Include="includes\Program.h" />
+    <ClInclude Include="includes\Rendering\DefaultRP.h" />
+    <ClInclude Include="includes\Rendering\IRenderingViewPoint.h" />
     <ClInclude Include="includes\Rendering\Material.h" />
     <ClInclude Include="includes\Rendering\Mesh.h" />
     <ClInclude Include="includes\Rendering\Model.h" />
+    <ClInclude Include="includes\Rendering\RenderingPipeline.h" />
     <ClInclude Include="includes\Rendering\Texture.h" />
   </ItemGroup>
   <ItemGroup>
@@ -73,8 +78,10 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\default.frag" />
-    <None Include="res\shaders\default.vert" />
+    <None Include="res\internals\shaders\default.frag" />
+    <None Include="res\internals\shaders\default.vert" />
+    <None Include="res\internals\shaders\simpleDepthShader.frag" />
+    <None Include="res\internals\shaders\simpleDepthShader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

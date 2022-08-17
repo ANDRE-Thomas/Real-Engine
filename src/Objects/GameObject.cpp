@@ -22,14 +22,13 @@ std::vector<Component*> GameObject::GetComponents()
 	return components;
 }
 
-
 void GameObject::AddComponent(Component* component)
 {
-	if (component->GetParent() != nullptr)
+	if (component->parent != nullptr)
 		Log::Error("Component can't have more than one parent.");
 
-	components.push_back(component);
 	component->RegisterParent(this);
+	components.push_back(component);
 }
 
 void GameObject::RemoveComponent(Component* component)

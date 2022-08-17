@@ -20,7 +20,7 @@ public:
 	Transform* GetTransform();
 
 protected:
-	~Component();
+	virtual ~Component();
 
 private:
 	GameObject* parent = nullptr;

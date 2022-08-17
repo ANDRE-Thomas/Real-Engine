@@ -23,8 +23,8 @@ public:
 	{
 		for (size_t i = components.size(); i-- > 0;)
 		{
-			if (reinterpret_cast<T*>(components[i]) != nullptr)
-				return reinterpret_cast<T*>(components[i]);
+			if (dynamic_cast<T*>(components[i]) != nullptr)
+				return dynamic_cast<T*>(components[i]);
 		}
 
 		return nullptr;
@@ -35,9 +35,9 @@ public:
 	{
 		for (size_t i = components.size(); i-- > 0;)
 		{
-			if (reinterpret_cast<T*>(components[i]) != nullptr)
+			if (dynamic_cast<T*>(components[i]) != nullptr)
 			{
-				component = reinterpret_cast<T>(&components[i]);
+				component = dynamic_cast<T*>(&components[i]);
 				return true;
 			}
 		}

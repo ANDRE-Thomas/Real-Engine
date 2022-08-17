@@ -7,6 +7,7 @@
 #include "Components/DirectionalLight.h"
 #include "Components/PointLight.h"
 #include "Display/WindowOptions.h"
+#include "Rendering/DefaultRP.h"
 #include "Log.h"
 
 GameObject* backpack;
@@ -18,7 +19,7 @@ void Program::InitGraph()
 
 	try
 	{
-		WindowOptions options = WindowOptions("Real Engine", false, false, 1280, 720, 4, vec3(0, 0, 0));
+		WindowOptions options = WindowOptions("Real Engine", false, false, 1280, 720, new DefaultRP(), 4, vec3(0, 0, 0));
 		window = new Window(options);
 	}
 	catch (const GraphInitException& exception)
@@ -27,34 +28,39 @@ void Program::InitGraph()
 		throw GraphInitException(exception);
 	}
 
-	camera = new Camera(60.0f, window->GetAspectRatio(), 0.1f, 100.0f);
-/*
-	GameObject* mainlight = new GameObject();
-	mainlight->AddComponent(new DirectionalLight(vec3(1.0f, 1.0f, 1.0f)));
-	mainlight->transform->position = vec3(3, 3, 5);
-	mainlight->transform->RotateAxis(vec3(0,1,0), 180.0f);
-*/
-	GameObject* pointLight = new GameObject();
-	pointLight->AddComponent(new PointLight(vec3(1, 1, 0)));
-	pointLight->transform->position = vec3(2, 0, -3);
+	camera = new GameObject();
+	camera->AddComponent(new Camera(60.0f, window->GetAspectRatio(), 0.1f, 100.0f));
+	camera->transform->position = vec3(6, 0, 0);
+	camera->transform->RotateAxis(vec3(0, 1, 0), 45);
 
-	pointLight = new GameObject();
-	pointLight->AddComponent(new PointLight(vec3(1, 0, 1)));
-	pointLight->transform->position = vec3(-2, 0, -3);
+	GameObject* mainlight = new GameObject();
+	mainlight->AddComponent(new DirectionalLight(vec3(1.0f, 0.25f, 0.5f) / 2.0f));
+	mainlight->transform->RotateAxis(vec3(0, 1, 0), -5);
+	mainlight->transform->position = vec3(0, 0, 5);
+
+	mainlight = new GameObject();
+	mainlight->AddComponent(new DirectionalLight(vec3(0.75f, 0.5f, 1.0f) / 2.0f));
+	mainlight->transform->RotateAxis(vec3(0, 1, 0), 5);
+	mainlight->transform->position = vec3(0, 0, 5);
 
 	backpack = new GameObject();
 
 	Material* backpackMaterial = Material::GetMaterial("res/shaders/", "textured");
 	backpackMaterial->AddTextures(std::vector<Texture> {
 		Texture::LoadTexture("res/models/backpack/ambient.jpg", "ambient"),
-		Texture::LoadTexture("res/models/backpack/diffuse.jpg", "diffuse"),
-		Texture::LoadTexture("res/models/backpack/normal.png", "normal"),
-		Texture::LoadTexture("res/models/backpack/roughness.jpg", "roughness"),	
-		Texture::LoadTexture("res/models/backpack/specular.jpg", "specular")
+			Texture::LoadTexture("res/models/backpack/diffuse.jpg", "diffuse"),
+			Texture::LoadTexture("res/models/backpack/normal.png", "normal"),
+			Texture::LoadTexture("res/models/backpack/roughness.jpg", "roughness"),
+			Texture::LoadTexture("res/models/backpack/specular.jpg", "specular")
 	});
 
+	backpack->AddComponent(new Renderer(Model::LoadModel("res/models/cube.obj", false)));
+	backpack->transform->position = vec3(0, 0, -15);
+	backpack->transform->scale = vec3(5, 5, 1);
+
+	backpack = new GameObject();
 	backpack->AddComponent(new Renderer(Model::LoadModel("res/models/backpack/backpack.obj", false), backpackMaterial));
-	backpack->transform->position = vec3(0, -1, -6);
+	backpack->transform->position = vec3(0, 0, -6);
 
 	GameObject* ground = new GameObject();
 
@@ -68,7 +74,7 @@ void Program::StartLoop()
 	do
 	{
 		backpack->transform->RotateAxis(vec3(0, 1, 0), window->DeltaTime() * 90.0f);
-		window->Draw(camera);
+		window->Draw(camera->GetComponent<Camera>());
 	} while (!window->CloseRequested());
 
 	Stop();

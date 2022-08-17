@@ -1,12 +1,11 @@
 #version 460 core
 #extension GL_ARB_bindless_texture : require
 
+const vec3 surfaceColor = vec3(1,1,1);
+
 in VsOut{
 	vec3 fragPosition;
 	vec3 normal;
-	vec3 tangent;
-	vec2 texCoord;
-	mat3 TBN;
 } vsOut;
 
 const int DIRECTIONAL_LIGHT = 0;
@@ -35,16 +34,7 @@ layout (std140, binding = 0, column_major) readonly buffer lightsSSBO
 	LightInfos lightInfos[];
 };
 
-struct Material{
-	sampler2D diffuse;
-	sampler2D ambient;
-	sampler2D normal;
-	sampler2D specular;
-	sampler2D roughness;
-};
-
 uniform vec3 viewPosition;
-uniform Material material;
 
 out vec4 fragColor;
 
@@ -81,23 +71,21 @@ float ShadowCalculation(sampler2D shadowMap, vec4 fragPosLightSpace, vec3 normal
 }
 
 void main(){
-
-	vec3 norm = texture(material.normal, vsOut.texCoord).rgb;
-	norm = norm * 2.0 - 1.0;   
-	norm = normalize(vsOut.TBN * norm); 
+	vec3 norm = normalize(vsOut.normal);
 
 	vec3 viewDir = normalize(viewPosition - vsOut.fragPosition);
 
 	vec3 result = vec3(0.0,0.0,0.0);
 
+	LightInfos light;
 	for(int i = 0; i < lightInfos.length(); i++)
 	{
-		LightInfos light = lightInfos[i];
+		light = lightInfos[i];
 
 		float distanceFromLight = length(vec3(light.lightPosition) - vsOut.fragPosition);
 		float attenuation = 1.0 / (light.constant + light.linear * distanceFromLight + light.quadratic * (distanceFromLight * distanceFromLight));    
 
-		vec3 ambient = vec3(light.ambient) * vec3(light.lightColor) * texture(material.diffuse, vsOut.texCoord).rgb;
+		vec3 ambient = vec3(light.ambient) * vec3(light.lightColor) * surfaceColor;
 
 		vec3 lightDir;
 
@@ -109,18 +97,18 @@ void main(){
 		// Specular
 		vec3 halfwayDir = normalize(lightDir + viewDir);
 		float spec = pow(max(dot(norm, halfwayDir), 0.0), 16.0f);
-		vec3 specular = vec3(light.specular) * vec3(light.lightColor) * (spec * texture(material.specular, vsOut.texCoord).rgb);  
+		vec3 specular = vec3(light.specular) * vec3(light.lightColor) * spec;  
 
 		// Diffuse 
 		float diff = max(dot(norm, lightDir), 0.0);
-		vec3 diffuse = vec3(light.diffuse) * vec3(light.lightColor) * (diff * texture(material.diffuse, vsOut.texCoord).rgb);
+		vec3 diffuse = vec3(light.diffuse) * vec3(light.lightColor) * (diff * surfaceColor);
         
 		ambient *= attenuation;
 		diffuse *= attenuation;
 		specular *= attenuation;
 
 		float shadow = ShadowCalculation(sampler2D(light.shadowMap), light.lightSpaceMatrix * vec4(vsOut.fragPosition, 1), norm, lightDir);       
-		vec3 lighting = ambient + (1.0f - shadow) * (diffuse + specular) * texture(material.ambient, vsOut.texCoord).r; 
+		vec3 lighting = (ambient + (1.0 - shadow) * (diffuse + specular)) * surfaceColor; 
 
 		result += lighting;
 	}

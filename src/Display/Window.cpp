@@ -1,9 +1,9 @@
 #include "Display/Window.h"
 
-#include "Components/Renderer.h"
-
 Window::Window(WindowOptions options)
 {
+	this->renderingPipeline = options.renderingPipeline;
+
 	this->height = options.heigth;
 	this->width = options.width;
 
@@ -36,6 +36,8 @@ Window::Window(WindowOptions options)
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+
+	renderingPipeline->Init();
 }
 
 Window::~Window()
@@ -47,8 +49,8 @@ void Window::Draw(Camera* camera)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	Renderer::RenderAll(camera);
-
+	renderingPipeline->Render(camera);
+		
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 

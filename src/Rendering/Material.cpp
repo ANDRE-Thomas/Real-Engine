@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <filesystem>
 
-#pragma region static
+#pragma region Static
 
 static const std::filesystem::path shadersArtefactsDirectory = "artefacts/shaders/";
 
@@ -235,7 +235,7 @@ std::string Material::LoadCodeFromFile(std::string filePath)
 	}
 }
 
-#pragma endregion static
+#pragma endregion
 
 Material::Material(std::string materialPath, std::string materialName)
 {
@@ -245,7 +245,7 @@ Material::Material(std::string materialPath, std::string materialName)
 	{
 		Log::Error("Error while compiling material: " + materialName + ", reverting to default material");
 
-		programID = LoadProgram("res/shaders/", "default");
+		programID = LoadProgram("res/internals/shaders/", "default");
 
 		if (programID == NULL)
 			throw std::runtime_error("Couln't load any shaders for material: " + materialName);
@@ -276,6 +276,11 @@ std::vector<Texture> Material::GetTextures()
 void Material::AddTextures(std::vector<Texture> textures)
 {
 	this->textures.insert(this->textures.end(), textures.begin(), textures.end());
+}
+
+bool Material::HasParameter(const std::string& name)
+{
+	return glGetUniformLocation(programID, name.c_str()) != -1;
 }
 
 void Material::SetBool(const std::string& name, bool value)

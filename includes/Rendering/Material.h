@@ -29,8 +29,11 @@ private:
 
 public:
 	GLint GetProgramID();
+
 	std::vector<Texture> GetTextures();
 	void AddTextures(std::vector<Texture> textures);
+
+	bool HasParameter(const std::string& name);
 
 	void SetBool(const std::string& name, bool value);
 	void SetInt(const std::string& name, int value);

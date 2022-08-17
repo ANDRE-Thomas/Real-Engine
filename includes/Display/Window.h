@@ -4,7 +4,8 @@
 #include <GLFW/glfw3.h>
 
 #include "Display/WindowOptions.h"
-#include "Objects/Camera.h"
+#include "Rendering/RenderingPipeline.h"
+#include "Components/Camera.h"
 #include <stdexcept>
 
 class Window
@@ -24,6 +25,7 @@ public:
 
 private:
 	GLFWwindow* window;
+	RenderingPipeline* renderingPipeline;
 
 	int height, width;
 	double lastFrame = 0;
