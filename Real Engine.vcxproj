@@ -19,51 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Components\Camera.cpp" />
-    <ClCompile Include="src\Components\Component.cpp" />
-    <ClCompile Include="src\Components\DirectionalLight.cpp" />
-    <ClCompile Include="src\Components\Light.cpp" />
-    <ClCompile Include="src\Components\PointLight.cpp" />
-    <ClCompile Include="src\Components\Renderer.cpp" />
-    <ClCompile Include="src\Components\Transform.cpp" />
-    <ClCompile Include="src\Components\ViewController.cpp" />
-    <ClCompile Include="src\Display\Window.cpp" />
-    <ClCompile Include="src\Inputs.cpp" />
-    <ClCompile Include="src\Log.cpp" />
-    <ClCompile Include="src\Objects\GameObject.cpp" />
-    <ClCompile Include="src\Program.cpp" />
-    <ClCompile Include="src\Real Engine.cpp" />
-    <ClCompile Include="src\Rendering\DefaultRP.cpp" />
-    <ClCompile Include="src\Rendering\Material.cpp" />
-    <ClCompile Include="src\Rendering\Mesh.cpp" />
-    <ClCompile Include="src\Rendering\Model.cpp" />
-    <ClCompile Include="src\Rendering\RenderingPipeline.cpp" />
-    <ClCompile Include="src\Rendering\Texture.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="includes\Components\Camera.h" />
-    <ClInclude Include="includes\Components\Component.h" />
-    <ClInclude Include="includes\Components\DirectionalLight.h" />
-    <ClInclude Include="includes\Components\Light.h" />
-    <ClInclude Include="includes\Components\PointLight.h" />
-    <ClInclude Include="includes\Components\Renderer.h" />
-    <ClInclude Include="includes\Components\Transform.h" />
-    <ClInclude Include="includes\Components\ViewController.h" />
-    <ClInclude Include="includes\Display\Window.h" />
-    <ClInclude Include="includes\Display\WindowOptions.h" />
-    <ClInclude Include="includes\Inputs.h" />
-    <ClInclude Include="includes\Log.h" />
-    <ClInclude Include="includes\Objects\GameObject.h" />
-    <ClInclude Include="includes\Program.h" />
-    <ClInclude Include="includes\Rendering\DefaultRP.h" />
-    <ClInclude Include="includes\Rendering\IRenderingViewPoint.h" />
-    <ClInclude Include="includes\Rendering\Material.h" />
-    <ClInclude Include="includes\Rendering\Mesh.h" />
-    <ClInclude Include="includes\Rendering\Model.h" />
-    <ClInclude Include="includes\Rendering\RenderingPipeline.h" />
-    <ClInclude Include="includes\Rendering\Texture.h" />
-  </ItemGroup>
-  <ItemGroup>
     <CustomBuild Include="res\shaders\textured.vert">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -86,6 +41,53 @@
     <None Include="res\internals\shaders\default.vert" />
     <None Include="res\internals\shaders\simpleDepthShader.frag" />
     <None Include="res\internals\shaders\simpleDepthShader.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="includes\Real Engine\Components\Camera.h" />
+    <ClInclude Include="includes\Real Engine\Components\Component.h" />
+    <ClInclude Include="includes\Real Engine\Components\DirectionalLight.h" />
+    <ClInclude Include="includes\Real Engine\Components\Light.h" />
+    <ClInclude Include="includes\Real Engine\Components\PointLight.h" />
+    <ClInclude Include="includes\Real Engine\Components\Renderer.h" />
+    <ClInclude Include="includes\Real Engine\Components\Transform.h" />
+    <ClInclude Include="includes\Real Engine\Components\ViewController.h" />
+    <ClInclude Include="includes\Real Engine\Display\Window.h" />
+    <ClInclude Include="includes\Real Engine\Display\WindowOptions.h" />
+    <ClInclude Include="includes\Real Engine\Inputs.h" />
+    <ClInclude Include="includes\Real Engine\Log.h" />
+    <ClInclude Include="includes\Real Engine\Objects\GameObject.h" />
+    <ClInclude Include="includes\Real Engine\Program.h" />
+    <ClInclude Include="includes\Real Engine\Rendering\DefaultRP.h" />
+    <ClInclude Include="includes\Real Engine\Rendering\IRenderingViewPoint.h" />
+    <ClInclude Include="includes\Real Engine\Rendering\Material.h" />
+    <ClInclude Include="includes\Real Engine\Rendering\Mesh.h" />
+    <ClInclude Include="includes\Real Engine\Rendering\Model.h" />
+    <ClInclude Include="includes\Real Engine\Rendering\RenderingPipeline.h" />
+    <ClInclude Include="includes\Real Engine\Rendering\Texture.h" />
+    <ClInclude Include="includes\Real Engine\Time.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Real Engine\Components\Camera.cpp" />
+    <ClCompile Include="src\Real Engine\Components\Component.cpp" />
+    <ClCompile Include="src\Real Engine\Components\DirectionalLight.cpp" />
+    <ClCompile Include="src\Real Engine\Components\Light.cpp" />
+    <ClCompile Include="src\Real Engine\Components\PointLight.cpp" />
+    <ClCompile Include="src\Real Engine\Components\Renderer.cpp" />
+    <ClCompile Include="src\Real Engine\Components\Transform.cpp" />
+    <ClCompile Include="src\Real Engine\Components\ViewController.cpp" />
+    <ClCompile Include="src\Real Engine\Display\Window.cpp" />
+    <ClCompile Include="src\Real Engine\Inputs.cpp" />
+    <ClCompile Include="src\Real Engine\Log.cpp" />
+    <ClCompile Include="src\Real Engine\Objects\GameObject.cpp" />
+    <ClCompile Include="src\Real Engine\Program.cpp" />
+    <ClCompile Include="src\Real Engine\Real Engine.cpp" />
+    <ClCompile Include="src\Real Engine\Rendering\DefaultRP.cpp" />
+    <ClCompile Include="src\Real Engine\Rendering\Material.cpp" />
+    <ClCompile Include="src\Real Engine\Rendering\Mesh.cpp" />
+    <ClCompile Include="src\Real Engine\Rendering\Model.cpp" />
+    <ClCompile Include="src\Real Engine\Rendering\RenderingPipeline.cpp" />
+    <ClCompile Include="src\Real Engine\Rendering\Texture.cpp" />
+    <ClCompile Include="src\Real Engine\Time.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
