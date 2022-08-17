@@ -3,13 +3,13 @@
 #include "Display/Window.h"
 #include "Objects/GameObject.h"
 
-class Program
+static class Program
 {
 public:
-	Window* window;
-	GameObject* camera;
+	static Window* window;
+	static GameObject* camera;
 
-	void InitGraph();
-	void StartLoop();
-	void Stop();
+	static void Init();
+	static void StartLoop();
+	static void Stop();
 };

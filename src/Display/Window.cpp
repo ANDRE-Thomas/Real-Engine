@@ -26,8 +26,6 @@ Window::Window(WindowOptions options)
 	if (glewInit() != GLEW_OK)
 		throw GraphInitException("Failed to initialize GLEW.");
 
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-
 	// Set Window clear color
 	glClearColor(options.baseColor.r, options.baseColor.g, options.baseColor.b, 0);
 
@@ -50,7 +48,7 @@ void Window::Draw(Camera* camera)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	renderingPipeline->Render(camera);
-		
+
 	glfwSwapBuffers(window);
 	glfwPollEvents();
 
@@ -76,6 +74,11 @@ float Window::GetAspectRatio()
 float Window::DeltaTime()
 {
 	return deltaTime;
+}
+
+GLFWwindow* Window::GetGLFWWindow()
+{
+	return window;
 }
 
 bool Window::CloseRequested()

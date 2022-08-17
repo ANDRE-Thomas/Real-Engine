@@ -8,8 +8,7 @@ int main()
 {
 	try
 	{
-		program = new Program();
-		program->InitGraph();
+		Program::Init();
 	}
 	catch (const GraphInitException& exception)
 	{
@@ -18,7 +17,7 @@ int main()
 
 	try
 	{
-		program->StartLoop();
+		Program::StartLoop();
 	}
 	catch (const std::runtime_error& error)
 	{

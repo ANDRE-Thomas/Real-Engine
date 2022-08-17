@@ -21,6 +21,7 @@ public:
 	float GetAspectRatio();
 	float DeltaTime();
 
+	GLFWwindow* GetGLFWWindow();
 	bool CloseRequested();
 
 private:

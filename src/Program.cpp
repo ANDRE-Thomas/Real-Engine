@@ -1,5 +1,7 @@
 #include "Program.h"
 
+#include "Inputs.h"
+
 #include "Objects/GameObject.h"
 #include "Rendering/Mesh.h"
 #include "Components/Renderer.h"
@@ -12,7 +14,10 @@
 
 GameObject* backpack;
 
-void Program::InitGraph()
+Window* Program::window;
+GameObject* Program::camera;
+
+void Program::Init()
 {
 	if (!glfwInit())
 		throw GraphInitException("GLFW Init Error");
@@ -28,6 +33,9 @@ void Program::InitGraph()
 		throw GraphInitException(exception);
 	}
 
+	Inputs::SetCursorVisibility(false);
+
+	//All of the following code is temporary while scene loading isn't done
 	camera = new GameObject();
 	camera->AddComponent(new Camera(60.0f, window->GetAspectRatio(), 0.1f, 100.0f));
 	camera->transform->position = vec3(6, 0, 0);

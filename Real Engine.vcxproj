@@ -26,7 +26,9 @@
     <ClCompile Include="src\Components\PointLight.cpp" />
     <ClCompile Include="src\Components\Renderer.cpp" />
     <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\Components\ViewController.cpp" />
     <ClCompile Include="src\Display\Window.cpp" />
+    <ClCompile Include="src\Inputs.cpp" />
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Objects\GameObject.cpp" />
     <ClCompile Include="src\Program.cpp" />
@@ -46,8 +48,10 @@
     <ClInclude Include="includes\Components\PointLight.h" />
     <ClInclude Include="includes\Components\Renderer.h" />
     <ClInclude Include="includes\Components\Transform.h" />
+    <ClInclude Include="includes\Components\ViewController.h" />
     <ClInclude Include="includes\Display\Window.h" />
     <ClInclude Include="includes\Display\WindowOptions.h" />
+    <ClInclude Include="includes\Inputs.h" />
     <ClInclude Include="includes\Log.h" />
     <ClInclude Include="includes\Objects\GameObject.h" />
     <ClInclude Include="includes\Program.h" />
