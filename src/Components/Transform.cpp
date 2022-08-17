@@ -57,7 +57,7 @@ Transform::Transform(mat4 matrix4x4) : Component()
 
 vec3 Transform::Forward()
 {
-	return vec3(0, 0, 1) * rotation;
+	return vec3(0, 0, -1) * rotation;
 }
 
 vec3 Transform::Up()
