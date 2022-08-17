@@ -8,16 +8,26 @@ using namespace glm;
 
 #include <vector>
 
+#include "Program.h"
+
 class Transform;
 class Component;
 
 class GameObject
 {
+friend class Program;
+
+private:
+	static std::vector<GameObject*> gameObjects;
+
+	static void UpdateAllGameObjects();
+
 public:
 	Transform* transform;
 
 	GameObject();
 
+	//Must be implemented in .h to recognize the class used in template
 	template<class T>
 	T* GetComponent()
 	{
@@ -30,6 +40,7 @@ public:
 		return nullptr;
 	}
 
+	//Must be implemented in .h to recognize the class used in template
 	template<class T>
 	bool TryGetComponent(T& component)
 	{
@@ -55,4 +66,6 @@ protected:
 
 private:
 	std::vector<Component*> components;
+
+	void Update();
 };

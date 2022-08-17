@@ -26,4 +26,6 @@ private:
 	GameObject* parent = nullptr;
 
 	void RegisterParent(GameObject* parent);
+
+	virtual void Update() {};
 };

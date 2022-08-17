@@ -82,7 +82,10 @@ void Program::StartLoop()
 	do
 	{
 		backpack->transform->RotateAxis(vec3(0, 1, 0), window->DeltaTime() * 90.0f);
+
+		GameObject::UpdateAllGameObjects();
 		window->Draw(camera->GetComponent<Camera>());
+
 	} while (!window->CloseRequested());
 
 	Stop();
