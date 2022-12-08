@@ -11,7 +11,7 @@ std::vector<GameObject*> GameObject::gameObjects;
 
 void GameObject::UpdateAllGameObjects()
 {
-	for (int i = gameObjects.size() - 1; i >= 0; i--)
+	for (size_t i = gameObjects.size(); i-- > 0;)
 		gameObjects[i]->Update();
 }
 

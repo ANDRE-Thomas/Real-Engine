@@ -7,7 +7,7 @@ using namespace glm;
 
 #include <map>
 
-static class Inputs
+class Inputs
 {
 public:
 	static void InitInputs(GLFWwindow* context);

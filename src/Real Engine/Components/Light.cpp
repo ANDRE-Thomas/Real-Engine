@@ -24,7 +24,7 @@ void Light::SetDepthMapsSize(int width, int height)
 	depthMapsWidth = width;
 	depthMapsHeight = height;
 
-	for (int i = lights.size() - 1; i >= 0; i--)
+	for (size_t i = lights.size(); i-- > 0;)
 		lights[i]->GenerateDepthMap();
 }
 

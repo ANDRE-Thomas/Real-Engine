@@ -1,12 +1,12 @@
 #include "Real Engine/Rendering/Model.h"
 
 #include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 #define STB_IMAGE_IMPLEMENTATION    
 #include "stb_image.h"
 
 #include <utility>
+#include <assimp/postprocess.h>
 
 #include "Real Engine/Log.h"
 
@@ -121,7 +121,7 @@ void Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::strin
 	std::string texturePath;
 	for (size_t i = 0; i < mat->GetTextureCount(type); i++)
 	{
-		mat->GetTexture(type, i, &textureName);
+		mat->GetTexture(type, static_cast<GLsizei>(i), &textureName);
 		texturePath = path.parent_path().string() + "/" + textureName.C_Str();
 
 		auto pair = modelTextures.find(texturePath);

@@ -83,45 +83,45 @@ void Renderer::UpdateGeometryBuffers()
 {
 	std::vector<Mesh> meshes = model->GetMeshes();
 
-	if (VAO.size() != 0)
-		glDeleteBuffers(VAO.size(), &VAO[0]);
+	if (!VAO.empty())
+		glDeleteBuffers(static_cast<GLsizei>(VAO.size()), VAO.data());
 
-	if (VBO.size() != 0)
-		glDeleteBuffers(VBO.size(), &VBO[0]);
+	if (!VBO.empty())
+		glDeleteBuffers(static_cast<GLsizei>(VBO.size()), VBO.data());
 
-	if (EBO.size() != 0)
-		glDeleteBuffers(EBO.size(), &EBO[0]);
+	if (!EBO.empty())
+		glDeleteBuffers(static_cast<GLsizei>(EBO.size()), EBO.data());
 
-	nBuffer = (int)meshes.size();
+	nBuffer = static_cast<int>(meshes.size());
 	VAO = std::vector<GLuint>(nBuffer);
 	VBO = std::vector<GLuint>(nBuffer);
 	EBO = std::vector<GLuint>(nBuffer);
 
-	glGenVertexArrays(nBuffer, &VAO[0]);
-	glGenBuffers(nBuffer, &VBO[0]);
-	glGenBuffers(nBuffer, &EBO[0]);
+	glGenVertexArrays(nBuffer, VAO.data());
+	glGenBuffers(nBuffer, VBO.data());
+	glGenBuffers(nBuffer, EBO.data());
 
 	for (size_t i = 0; i < nBuffer; i++)
 	{
 		glBindVertexArray(VAO[i]);
 
 		glBindBuffer(GL_ARRAY_BUFFER, VBO[i]);
-		glBufferData(GL_ARRAY_BUFFER, meshes[i].vertices.size() * sizeof(Vertex), &meshes[i].vertices[0], GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizei>(meshes[i].vertices.size() * sizeof(Vertex)), meshes[i].vertices.data(), GL_STATIC_DRAW);
 
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), static_cast<void*>(nullptr));
 
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, normal)));
 
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_TRUE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, tangent)));
 
 		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoords));
+		glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void*>(offsetof(Vertex, texCoords)));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO[i]);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, meshes[i].indices.size() * sizeof(unsigned short), &meshes[i].indices[0], GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizei>(meshes[i].indices.size() * sizeof(unsigned short)), meshes[i].indices.data(), GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		glBindVertexArray(0);

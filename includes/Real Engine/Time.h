@@ -1,6 +1,6 @@
 #pragma once
 
-static class Time
+class Time
 {
 	friend class Program;
 

@@ -115,9 +115,9 @@ void DefaultRP::SetSecondPassParameters(Material* material, IRenderingViewPoint*
 		std::vector<Texture> textures = material->GetTextures();
 		for (size_t j = 0; j < textures.size(); j++)
 		{
-			glActiveTexture(GL_TEXTURE0 + j);
+			glActiveTexture(GL_TEXTURE0 + static_cast<GLenum>(j));
 
-			material->SetInt("material." + textures[j].GetName(), j); //Bind uniform to texture location
+			material->SetInt("material." + textures[j].GetName(), static_cast<int>(j)); //Bind uniform to texture location
 			glBindTexture(GL_TEXTURE_2D, textures[j].GetID()); //Bind texture to texture location
 		}
 

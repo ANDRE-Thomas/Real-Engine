@@ -3,7 +3,7 @@
 #include "Display/Window.h"
 #include "Objects/GameObject.h"
 
-static class Program
+class Program
 {
 public:
 	static Window* window;

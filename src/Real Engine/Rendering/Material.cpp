@@ -77,9 +77,9 @@ GLuint Material::LoadProgramFromFile(std::string materialID, xxh::hash64_t codeh
 	// Load metadata from file
 	std::ifstream metaInput(materialDataFilename + ".shadermeta", std::ios::app);
 	GLenum format = 0;
-	metaInput.read((char*)&format, sizeof(GLenum));
+	metaInput.read(reinterpret_cast<char*>(&format), sizeof(GLenum));
 	xxh::hash64_t materialCodeHash = 0;
-	metaInput.read((char*)&materialCodeHash, sizeof(xxh::hash64_t));
+	metaInput.read(reinterpret_cast<char*>(&materialCodeHash), sizeof(xxh::hash64_t));
 	metaInput.close();
 
 	if (materialCodeHash != codehash)
@@ -89,7 +89,7 @@ GLuint Material::LoadProgramFromFile(std::string materialID, xxh::hash64_t codeh
 	}
 
 	// Install shader binary
-	glProgramBinary(programID, format, buffer.data(), buffer.size());
+	glProgramBinary(programID, format, buffer.data(), static_cast<GLsizei>(buffer.size()));
 
 	// Check for success/failure
 	GLint status;
@@ -122,7 +122,7 @@ bool Material::SaveProgramToFile(GLuint programID, std::string materialID, xxh::
 	//Get buffer
 	std::vector<GLubyte> buffer(length);
 	GLenum format = 0;
-	glGetProgramBinary(programID, length, NULL, &format, buffer.data());
+	glGetProgramBinary(programID, length, nullptr, &format, buffer.data());
 
 	if (!std::filesystem::exists(shadersArtefactsDirectory))
 		std::filesystem::create_directories(shadersArtefactsDirectory);
@@ -136,8 +136,8 @@ bool Material::SaveProgramToFile(GLuint programID, std::string materialID, xxh::
 
 	// Write the metadata to a file.
 	std::ofstream outMetadata(shaderDataPath + materialID + ".shadermeta", std::ios::trunc);
-	outMetadata.write((char*)&format, sizeof(GLenum));
-	outMetadata.write((char*)&codeHash, sizeof(xxh::hash64_t));
+	outMetadata.write(reinterpret_cast<char*>(&format), sizeof(GLenum));
+	outMetadata.write(reinterpret_cast<char*>(&codeHash), sizeof(xxh::hash64_t));
 	outMetadata.close();
 
 	return true;
@@ -154,7 +154,7 @@ GLuint Material::CompileProgramFromShadersCode(std::string vertexCode, std::stri
 
 	// Compile Vertex Shader
 	char const* vertexSourcePointer = vertexCode.c_str();
-	glShaderSource(vertexShaderID, 1, &vertexSourcePointer, NULL);
+	glShaderSource(vertexShaderID, 1, &vertexSourcePointer, nullptr);
 	glCompileShader(vertexShaderID);
 
 	// Check Vertex Shader
@@ -163,16 +163,16 @@ GLuint Material::CompileProgramFromShadersCode(std::string vertexCode, std::stri
 	if (infoLogLength > 0)
 	{
 		std::vector<char> vertexShaderErrorMessage(infoLogLength + 1);
-		glGetShaderInfoLog(vertexShaderID, infoLogLength, NULL, &vertexShaderErrorMessage[0]);
+		glGetShaderInfoLog(vertexShaderID, infoLogLength, nullptr, vertexShaderErrorMessage.data());
 
 		Log::Error("Error while compiling shader: ");
-		Log::Error(&vertexShaderErrorMessage[0]);
+		Log::Error(vertexShaderErrorMessage.data());
 		return NULL;
 	}
 
 	// Compile Fragment Shader
 	char const* FragmentSourcePointer = fragmentCode.c_str();
-	glShaderSource(fragmentShaderID, 1, &FragmentSourcePointer, NULL);
+	glShaderSource(fragmentShaderID, 1, &FragmentSourcePointer, nullptr);
 	glCompileShader(fragmentShaderID);
 
 	// Check Fragment Shader
@@ -181,10 +181,10 @@ GLuint Material::CompileProgramFromShadersCode(std::string vertexCode, std::stri
 	if (infoLogLength > 0)
 	{
 		std::vector<char> fragmentShaderErrorMessage(infoLogLength + 1);
-		glGetShaderInfoLog(fragmentShaderID, infoLogLength, NULL, &fragmentShaderErrorMessage[0]);
+		glGetShaderInfoLog(fragmentShaderID, infoLogLength, nullptr, fragmentShaderErrorMessage.data());
 
 		Log::Error("Error while compiling shader: ");
-		Log::Error(&fragmentShaderErrorMessage[0]);
+		Log::Error(fragmentShaderErrorMessage.data());
 		return NULL;
 	}
 
@@ -200,10 +200,10 @@ GLuint Material::CompileProgramFromShadersCode(std::string vertexCode, std::stri
 	if (infoLogLength > 0)
 	{
 		std::vector<char> programErrorMessage(infoLogLength + 1);
-		glGetProgramInfoLog(programID, infoLogLength, NULL, &programErrorMessage[0]);
+		glGetProgramInfoLog(programID, infoLogLength, nullptr, programErrorMessage.data());
 
 		Log::Error("Error while linking program: ");
-		Log::Error(&programErrorMessage[0]);
+		Log::Error(programErrorMessage.data());
 		return NULL;
 	}
 
@@ -240,16 +240,16 @@ std::string Material::LoadCodeFromFile(std::string filePath)
 
 Material::Material(std::string materialPath, std::string materialName)
 {
-	programID = LoadProgram(materialPath, materialName);
+	programID = static_cast<GLsizei>(LoadProgram(materialPath, materialName));
 
 	if (programID == NULL)
 	{
 		Log::Error("Error while compiling material: " + materialName + ", reverting to default material");
 
-		programID = LoadProgram("res/internals/shaders/", "default");
+		programID = static_cast<GLsizei>(LoadProgram("res/internals/shaders/", "default"));
 
 		if (programID == NULL)
-			throw std::runtime_error("Couln't load any shaders for material: " + materialName);
+			throw std::runtime_error("Couldn't load any shaders for material: " + materialName);
 	}
 }
 
@@ -286,7 +286,7 @@ bool Material::HasParameter(const std::string& name)
 
 void Material::SetBool(const std::string& name, bool value)
 {
-	glUniform1i(glGetUniformLocation(programID, name.c_str()), (int)value);
+	glUniform1i(glGetUniformLocation(programID, name.c_str()), static_cast<int>(value));
 }
 
 void Material::SetInt(const std::string& name, int value)
