@@ -1,5 +1,8 @@
 #include "Real Engine/Components/Transform.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+
 Transform::Transform() : Component()
 {
 	this->position = vec3(0);
