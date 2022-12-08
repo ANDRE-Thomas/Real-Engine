@@ -1,5 +1,9 @@
 #include "Real Engine/Display/Window.h"
 
+#include <functional>
+
+#include "Real Engine/Objects/GameObject.h"
+
 Window::Window(WindowOptions options)
 {
 	this->renderingPipeline = options.renderingPipeline;
@@ -25,6 +29,13 @@ Window::Window(WindowOptions options)
 	glewExperimental = true;
 	if (glewInit() != GLEW_OK)
 		throw GraphInitException("Failed to initialize GLEW.");
+
+	glfwSetWindowUserPointer(window, this);
+
+	glfwSetFramebufferSizeCallback(window, [](GLFWwindow* window, int width, int height)
+		{
+			static_cast<Window*>(glfwGetWindowUserPointer(window))->OnResize(width, height);
+		});
 
 	// Set Window clear color
 	glClearColor(options.baseColor.r, options.baseColor.g, options.baseColor.b, 0);
@@ -64,7 +75,7 @@ int Window::GetHeight()
 
 float Window::GetAspectRatio()
 {
-	return (float)width / (float)height;
+	return static_cast<float>(width) / static_cast<float>(height);
 }
 
 GLFWwindow* Window::GetGLFWWindow()
@@ -75,4 +86,17 @@ GLFWwindow* Window::GetGLFWWindow()
 bool Window::CloseRequested()
 {
 	return glfwWindowShouldClose(window) != 0;
+}
+
+void Window::OnResize(int width, int height)
+{
+	this->width = width;
+	this->height = height;
+
+	glViewport(0, 0, width, height);
+
+	std::vector<Camera*> cameras = GameObject::FindAllComponentsOfType<Camera>();
+
+	for (size_t i = cameras.size(); i-- > 0;)
+		cameras[i]->UpdateProjectionMatrix();
 }

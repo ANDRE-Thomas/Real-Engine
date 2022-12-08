@@ -29,6 +29,8 @@ private:
 	RenderingPipeline* renderingPipeline;
 
 	int height, width;
+
+	void OnResize(int width, int height);
 };
 
 class GraphInitException : public std::runtime_error
