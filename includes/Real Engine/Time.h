@@ -2,10 +2,10 @@
 
 static class Time
 {
-friend class Program;
+	friend class Program;
 
 public:
-	static float GetDeltaTime();
+	static double GetDeltaTime();
 
 private:
 	static double deltaTime, lastFrameTime;

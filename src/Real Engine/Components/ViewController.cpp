@@ -18,7 +18,7 @@ void ViewController::Update()
 	vec2 mousePosition = Inputs::GetMousePosition();
 
 	Transform* transform = GetTransform();
-	float deltaTime = Time::GetDeltaTime();
+	float deltaTime = static_cast<float>(Time::GetDeltaTime());
 
 	transform->RotateAxis(vec3(0, -1, 0), mouseSpeed * (mousePosition - previousMousePosition).x * deltaTime);
 	transform->RotateAxis(transform->Right(), mouseSpeed * -(mousePosition - previousMousePosition).y * deltaTime);

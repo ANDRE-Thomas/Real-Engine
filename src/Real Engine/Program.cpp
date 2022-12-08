@@ -1,5 +1,7 @@
 #include "Real Engine/Program.h"
 
+#include <chrono>
+
 #include "Real Engine/Inputs.h"
 #include "Real Engine/Time.h"
 
@@ -26,7 +28,7 @@ void Program::Init()
 
 	try
 	{
-		WindowOptions options = WindowOptions("Real Engine", false, false, 1280, 720, new DefaultRP(), 4, vec3(0, 0, 0));
+		WindowOptions options = WindowOptions("Real Engine", false, true, 1280, 720, new DefaultRP(), 4, vec3(0, 0, 0));
 		window = new Window(options);
 	}
 	catch (const GraphInitException& exception)
@@ -85,14 +87,13 @@ void Program::StartLoop()
 {
 	do
 	{
-		backpack->transform->RotateAxis(vec3(0, 1, 0), Time::GetDeltaTime() * 90.0f);
+		backpack->transform->RotateAxis(vec3(0, 1, 0), static_cast<float>(Time::GetDeltaTime()) * 90.0f);
+
+		Time::Update();
+		Inputs::Update();
 
 		GameObject::UpdateAllGameObjects();
 		window->Draw(camera->GetComponent<Camera>());
-
-		Inputs::Update();
-		Time::Update();
-
 	} while (!window->CloseRequested());
 
 	Stop();
@@ -100,8 +101,7 @@ void Program::StartLoop()
 
 void Program::Stop()
 {
-	if (window != nullptr)
-		delete(window);
+	delete(window);
 
 	glfwTerminate();
 }

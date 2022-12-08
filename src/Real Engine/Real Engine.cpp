@@ -1,8 +1,5 @@
 #include "Real Engine/Program.h"
 #include "Real Engine/Log.h"
-#include "Real Engine/Display/Window.h"
-
-Program* program;
 
 int main()
 {
