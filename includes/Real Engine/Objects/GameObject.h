@@ -1,9 +1,6 @@
 #pragma once
 
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
 #include <glm/gtx/quaternion.hpp>
-#include <glm/gtx/string_cast.hpp>
 using namespace glm;
 
 #include <vector>
@@ -15,7 +12,41 @@ class Component;
 
 class GameObject
 {
-friend class Program;
+	friend class Program;
+
+public:
+	template<class T>
+	static T* FindComponentOfType()
+	{
+		for (size_t i = gameObjects.size(); i-- > 0;)
+		{
+			std::vector<Component*> components = gameObjects[i]->components;
+			for (size_t j = components.size(); j-- > 0;)
+			{
+				if (dynamic_cast<T*>(components[j]) != nullptr)
+					return dynamic_cast<T*>(components[j]);
+			}
+		}
+
+		return nullptr;
+	}
+
+	template<class T>
+	static std::vector<T*> FindAllComponentsOfType()
+	{
+		std::vector<T*> foundComponents;
+		for (size_t i = gameObjects.size(); i-- > 0;)
+		{
+			std::vector<Component*> components = gameObjects[i]->components;
+			for (size_t j = components.size(); j-- > 0;)
+			{
+				if (dynamic_cast<T*>(components[j]) != nullptr)
+					foundComponents.push_back(dynamic_cast<T*>(components[j]));
+			}
+		}
+
+		return foundComponents;
+	}
 
 private:
 	static std::vector<GameObject*> gameObjects;
