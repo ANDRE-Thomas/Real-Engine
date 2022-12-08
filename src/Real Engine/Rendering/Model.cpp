@@ -8,7 +8,7 @@
 #include <utility>
 #include <assimp/postprocess.h>
 
-#include "Real Engine/Log.h"
+#include "Real Engine/Core/Log.h"
 
 std::vector<std::pair<aiTextureType, std::string>> textureTypesToLoad = {
 	{aiTextureType_DIFFUSE, "texture_diffuse"},

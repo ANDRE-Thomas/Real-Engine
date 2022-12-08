@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 #include "Real Engine/Objects/GameObject.h"
-#include "Real Engine/Log.h"
+#include "Real Engine/Core/Log.h"
 
 Component::Component() 
 {

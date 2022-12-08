@@ -3,7 +3,7 @@
 #include "Real Engine/Components/Component.h"
 #include "Real Engine/Components/Transform.h"
 
-#include "Real Engine/Log.h"
+#include "Real Engine/Core/Log.h"
 
 #pragma region Static
 

@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Display/Window.h"
-#include "Objects/GameObject.h"
+#include "Real Engine/Rendering/Display/Window.h"
 
 class Program
 {

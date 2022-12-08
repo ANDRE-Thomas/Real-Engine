@@ -1,11 +1,8 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include <stdexcept>
 
-#include "Real Engine/Display/WindowOptions.h"
+#include "WindowOptions.h"
 #include "Real Engine/Rendering/RenderingPipeline.h"
 #include "Real Engine/Components/Camera.h"
 

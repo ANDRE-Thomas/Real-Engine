@@ -1,7 +1,7 @@
 #include "Real Engine/Components/ViewController.h"
 
-#include "Real Engine/Inputs.h"
-#include "Real Engine/Time.h"
+#include "Real Engine/Core/Inputs.h"
+#include "Real Engine/Core/Time.h"
 #include "Real Engine/Components/Transform.h"
 
 ViewController::ViewController() : Component()

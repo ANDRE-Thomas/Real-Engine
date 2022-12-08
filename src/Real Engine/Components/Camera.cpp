@@ -1,7 +1,7 @@
 #include "Real Engine/Components/Camera.h"
 
-#include "Real Engine/Program.h"
-#include "Real Engine/Display/Window.h"
+#include "Real Engine/Core/Program.h"
+#include "Real Engine/Rendering/Display/Window.h"
 
 Camera* Camera::mainCamera = nullptr;
 

@@ -51,20 +51,20 @@
     <ClInclude Include="includes\Real Engine\Components\Renderer.h" />
     <ClInclude Include="includes\Real Engine\Components\Transform.h" />
     <ClInclude Include="includes\Real Engine\Components\ViewController.h" />
-    <ClInclude Include="includes\Real Engine\Display\Window.h" />
-    <ClInclude Include="includes\Real Engine\Display\WindowOptions.h" />
-    <ClInclude Include="includes\Real Engine\Inputs.h" />
-    <ClInclude Include="includes\Real Engine\Log.h" />
+    <ClInclude Include="includes\Real Engine\Core\Inputs.h" />
+    <ClInclude Include="includes\Real Engine\Core\Log.h" />
+    <ClInclude Include="includes\Real Engine\Core\Program.h" />
+    <ClInclude Include="includes\Real Engine\Core\Time.h" />
     <ClInclude Include="includes\Real Engine\Objects\GameObject.h" />
-    <ClInclude Include="includes\Real Engine\Program.h" />
     <ClInclude Include="includes\Real Engine\Rendering\DefaultRP.h" />
+    <ClInclude Include="includes\Real Engine\Rendering\Display\Window.h" />
+    <ClInclude Include="includes\Real Engine\Rendering\Display\WindowOptions.h" />
     <ClInclude Include="includes\Real Engine\Rendering\IRenderingViewPoint.h" />
     <ClInclude Include="includes\Real Engine\Rendering\Material.h" />
     <ClInclude Include="includes\Real Engine\Rendering\Mesh.h" />
     <ClInclude Include="includes\Real Engine\Rendering\Model.h" />
     <ClInclude Include="includes\Real Engine\Rendering\RenderingPipeline.h" />
     <ClInclude Include="includes\Real Engine\Rendering\Texture.h" />
-    <ClInclude Include="includes\Real Engine\Time.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Real Engine\Components\Camera.cpp" />
@@ -75,19 +75,19 @@
     <ClCompile Include="src\Real Engine\Components\Renderer.cpp" />
     <ClCompile Include="src\Real Engine\Components\Transform.cpp" />
     <ClCompile Include="src\Real Engine\Components\ViewController.cpp" />
-    <ClCompile Include="src\Real Engine\Display\Window.cpp" />
-    <ClCompile Include="src\Real Engine\Inputs.cpp" />
-    <ClCompile Include="src\Real Engine\Log.cpp" />
+    <ClCompile Include="src\Real Engine\Core\Inputs.cpp" />
+    <ClCompile Include="src\Real Engine\Core\Log.cpp" />
+    <ClCompile Include="src\Real Engine\Core\Program.cpp" />
+    <ClCompile Include="src\Real Engine\Core\Real Engine.cpp" />
+    <ClCompile Include="src\Real Engine\Core\Time.cpp" />
     <ClCompile Include="src\Real Engine\Objects\GameObject.cpp" />
-    <ClCompile Include="src\Real Engine\Program.cpp" />
-    <ClCompile Include="src\Real Engine\Real Engine.cpp" />
     <ClCompile Include="src\Real Engine\Rendering\DefaultRP.cpp" />
+    <ClCompile Include="src\Real Engine\Rendering\Display\Window.cpp" />
     <ClCompile Include="src\Real Engine\Rendering\Material.cpp" />
     <ClCompile Include="src\Real Engine\Rendering\Mesh.cpp" />
     <ClCompile Include="src\Real Engine\Rendering\Model.cpp" />
     <ClCompile Include="src\Real Engine\Rendering\RenderingPipeline.cpp" />
     <ClCompile Include="src\Real Engine\Rendering\Texture.cpp" />
-    <ClCompile Include="src\Real Engine\Time.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

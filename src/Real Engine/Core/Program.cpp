@@ -1,17 +1,17 @@
-#include "Real Engine/Program.h"
+#include "Real Engine/Core/Program.h"
 
-#include "Real Engine/Inputs.h"
-#include "Real Engine/Time.h"
+#include "Real Engine/Core/Inputs.h"
+#include "Real Engine/Core/Time.h"
 
 #include "Real Engine/Objects/GameObject.h"
 #include "Real Engine/Rendering/Mesh.h"
 #include "Real Engine/Components/Renderer.h"
 #include "Real Engine/Components/Transform.h"
 #include "Real Engine/Components/DirectionalLight.h"
-#include "Real Engine/Display/WindowOptions.h"
+#include "Real Engine/Rendering/Display/Window.h"
 #include "Real Engine/Rendering/DefaultRP.h"
 #include "Real Engine/Components/ViewController.h"
-#include "Real Engine/Log.h"
+#include "Real Engine/Core/Log.h"
 
 GameObject* backpack;
 

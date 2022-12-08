@@ -1,5 +1,5 @@
-#include "Real Engine/Program.h"
-#include "Real Engine/Log.h"
+#include "Real Engine/Core/Program.h"
+#include "Real Engine/Core/Log.h"
 
 int main()
 {

@@ -1,4 +1,4 @@
-#include "Real Engine/Inputs.h"
+#include "Real Engine/Core/Inputs.h"
 
 std::map<int, Inputs::KeyState> Inputs::keyStates = std::map<int, KeyState>();
 

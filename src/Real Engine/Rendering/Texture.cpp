@@ -3,8 +3,6 @@
 #include <stb_image.h>
 #include <excpt.h>
 
-#include "Real Engine/Log.h"
-
 #pragma region Static
 
 Texture Texture::LoadTexture(std::filesystem::path path, std::string name)

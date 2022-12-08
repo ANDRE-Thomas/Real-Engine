@@ -1,7 +1,6 @@
-#include "Real Engine/Display/Window.h"
-
 #include <functional>
 
+#include "Real Engine/Rendering/Display/Window.h"
 #include "Real Engine/Objects/GameObject.h"
 
 Window::Window(WindowOptions options)
