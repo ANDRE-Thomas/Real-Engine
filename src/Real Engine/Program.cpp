@@ -1,7 +1,5 @@
 #include "Real Engine/Program.h"
 
-#include <chrono>
-
 #include "Real Engine/Inputs.h"
 #include "Real Engine/Time.h"
 
@@ -10,7 +8,6 @@
 #include "Real Engine/Components/Renderer.h"
 #include "Real Engine/Components/Transform.h"
 #include "Real Engine/Components/DirectionalLight.h"
-#include "Real Engine/Components/PointLight.h"
 #include "Real Engine/Display/WindowOptions.h"
 #include "Real Engine/Rendering/DefaultRP.h"
 #include "Real Engine/Components/ViewController.h"
@@ -19,7 +16,6 @@
 GameObject* backpack;
 
 Window* Program::window;
-GameObject* Program::camera;
 
 void Program::Init()
 {
@@ -40,13 +36,13 @@ void Program::Init()
 	Inputs::InitInputs(window->GetGLFWWindow());
 
 	//All of the following code is temporary while scene loading isn't done
-	camera = new GameObject();
-	camera->AddComponent(new Camera(60.0f, window->GetAspectRatio(), 0.1f, 100.0f));
+	GameObject* camera = new GameObject();
+	camera->AddComponent(new Camera(60.0f, 0.1f, 100.0f));
 	camera->transform->position = vec3(6, 0, 0);
 	camera->transform->RotateAxis(vec3(0, 1, 0), 45);
 
 	camera->AddComponent(new ViewController());
-	
+
 	GameObject* mainlight = new GameObject();
 	mainlight->AddComponent(new DirectionalLight(vec3(1.0f, 0.25f, 0.5f) / 2.0f));
 	mainlight->transform->RotateAxis(vec3(0, 1, 0), -5);
@@ -93,7 +89,7 @@ void Program::StartLoop()
 		Inputs::Update();
 
 		GameObject::UpdateAllGameObjects();
-		window->Draw(camera->GetComponent<Camera>());
+		window->Draw(Camera::GetMainCamera());
 	} while (!window->CloseRequested());
 
 	Stop();

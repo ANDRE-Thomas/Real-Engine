@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stdexcept>
-
 #include "Real Engine/Components/Component.h"
 #include "Real Engine/Components/Transform.h"
 
