@@ -1,6 +1,5 @@
 #pragma once
 
-#include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
 #include "glm/glm.hpp"
@@ -30,5 +29,5 @@ private:
 
 	static GLFWwindow* context;
 
-	static void OnKeyUpdate(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void OnKeyUpdate(GLFWwindow*, int key, int, int action, int);
 };
